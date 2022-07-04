@@ -1,8 +1,15 @@
 import React from "react";
-
+import { Routes, Route } from "react-router-dom";
+import SigInPage from "./pages/SigInPage";
+import HomePage from "./pages/HomePage";
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline bg-slate-800">Hello world!</h1>
+    <div className="h-full">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="signin" element={<SigInPage />} />
+      </Routes>
+    </div>
   );
 }
 
