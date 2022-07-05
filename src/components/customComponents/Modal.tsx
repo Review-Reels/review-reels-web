@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
 import { X } from "phosphor-react";
+import Button from "./Button";
 interface Props {
   title?: string;
   open: boolean;
   PrimaryButtonTitle: string;
-  cancelButtonTitle: string;
   handleClose: (value: boolean) => void;
   children?: ReactNode;
 }
@@ -13,7 +13,6 @@ function Modal({
   title,
   handleClose,
   children,
-  cancelButtonTitle,
   PrimaryButtonTitle,
 }: Props) {
   return (
@@ -25,10 +24,12 @@ function Modal({
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">{title}</h3>
+                <div className="flex items-start justify-between p-5 border-slate-200 rounded-t">
+                  <h3 className="text-xl font-regular text-color-Black2">
+                    {title}
+                  </h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    className="p-2 ml-auto bg-transparent border-0 text-Dove_Grey  float-right text-3xl leading-none font-semibold outline-none focus:outline-none rounded-full bg-Athens_Gray"
                     onClick={() => handleClose(false)}
                   >
                     <X size={24} />
@@ -37,21 +38,10 @@ function Modal({
                 {/*body*/}
                 <div className="relative p-6 flex-auto">{children}</div>
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => handleClose(false)}
-                  >
-                    {cancelButtonTitle}
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => handleClose(false)}
-                  >
+                <div className="flex items-center justify-center p-6 border-slate-200 rounded-b">
+                  <Button onClick={() => handleClose(false)}>
                     {PrimaryButtonTitle}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

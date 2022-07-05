@@ -1,25 +1,18 @@
-import React, { useState } from "react";
-import Modal from "../components/customComponents/Modal";
-import Button from "../components/customComponents/Button";
+import React, { Fragment } from "react";
+
+import AskMessagesList from "../components/AskMessagesList";
+import RRCamera from "../components/customComponents/RRCamera.jsx";
 const AskMessages = () => {
-  const [open, setOpen] = useState(false);
   return (
-    <div>
-      <Button onClick={() => setOpen(true)} className="mt-10 m-10">
-        Create an Ask Message
-      </Button>
-      ask message
-      <Modal
-        open={open}
-        handleClose={setOpen}
-        title="dhdjh"
-        PrimaryButtonTitle="Save"
-        cancelButtonTitle="cancel"
-      >
-        lksdfjsjkgjskdfgjkdg sdjkgsfgk sgjksgs
-        sdjkgjsgkjsfkgjshdfghdjksfghkjsfhgkdsfhgkjhsdfkjghkjsdhfgkjdsfhkgjhsdfkjhgkjdfshgjk
-      </Modal>
-    </div>
+    <Fragment>
+      <div className="flex justify-between flex-auto">
+        <AskMessagesList />
+        <RRCamera />
+
+        <div>dsjhf</div>
+        <div>dsjhf</div>
+      </div>
+    </Fragment>
   );
 };
 
