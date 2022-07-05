@@ -6,6 +6,7 @@ import Integrations from "./pages/Integrations";
 import Pricing from "./pages/Pricing";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
+import Inbox from "./pages/Inbox";
 
 function LoggedInRoutes() {
   return (
@@ -13,7 +14,7 @@ function LoggedInRoutes() {
       <Routes>
         <Route path="/askMessage" element={<AskMessages />} />
         <Route path="/reviewLibrary" element={<ReviewLibrary />} />
-        <Route path="/Inbox" element={<AskMessages />} />
+        <Route path="/Inbox" element={<Inbox />} />
         <Route path="/Integrations" element={<Integrations />} />
         <Route path="/Pricing" element={<Pricing />} />
         <Route path="/Settings" element={<Settings />} />

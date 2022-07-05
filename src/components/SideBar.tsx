@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../images/LogoSmall.svg";
 import {
   ChatTeardropDots,
   CirclesFour,
@@ -7,10 +8,14 @@ import {
   Plug,
   SignOut,
   Tag,
+  PaperPlaneTilt,
 } from "phosphor-react";
 import { NavLink } from "react-router-dom";
 
 function SideBar() {
+  const signOut = () => {
+    console.log("signout");
+  };
   let activeClassName =
     "flex items-center p-2 text-base font-normal text-gray-900 rounded-2xl dark:text-black hover:bg-Peach_Cream-dark dark:hover:bg-Peach_Cream-dark bg-Peach_Cream-dark";
   let normalClassName =
@@ -18,6 +23,9 @@ function SideBar() {
   return (
     <aside className="w-64 h-screen" aria-label="Sidebar">
       <div className="overflow-y-auto py-4 px-3 bg-Peach_Cream-normal  dark:bg-Peach_Cream-normal  h-screen">
+        <div className="flex justify-center">
+          <img src={logo} alt="review reels logo" />
+        </div>
         <ul className="space-y-2  my-10">
           <li>
             <NavLink
@@ -43,7 +51,7 @@ function SideBar() {
                 Review library
               </span>
               <span className="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                Pro
+                pro
               </span>
             </NavLink>
           </li>
@@ -54,7 +62,7 @@ function SideBar() {
                 isActive ? activeClassName : normalClassName
               }
             >
-              <Plug size={32} />
+              <PaperPlaneTilt size={32} />
               <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
               <span className="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
                 3
@@ -108,9 +116,11 @@ function SideBar() {
             </NavLink>
           </li>
           <li>
-            <button className={normalClassName}>
+            <button onClick={signOut} className={normalClassName + "w-full"}>
               <SignOut size={32} />
-              <span className="flex-1 ml-3 whitespace-nowrap">Signout</span>
+              <span className="flex-1 ml-3 whitespace-nowrap mr-20 pr-8">
+                Signout
+              </span>
             </button>
           </li>
         </ul>
