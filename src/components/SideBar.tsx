@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../images/LogoSmall.svg";
 import logoOnly from "../images/LogoOnly.svg";
 import {
@@ -13,8 +13,15 @@ import {
   List,
 } from "phosphor-react";
 import { NavLink } from "react-router-dom";
+import useCheckMobileScreen from "../hooks/checkMobileDevice";
 
 function SideBar() {
+  const isMobile = useCheckMobileScreen();
+
+  useEffect(() => {
+    if (isMobile) setHidden(true);
+    else setHidden(false);
+  }, [isMobile]);
   const [hidden, setHidden] = useState(false);
   const signOut = () => {
     console.log("signout");
