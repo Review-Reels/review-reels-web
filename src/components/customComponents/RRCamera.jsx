@@ -1,11 +1,24 @@
 import React, { useRef, useEffect } from "react";
-import { ReactMediaRecorder } from "react-media-recorder";
+import { useReactMediaRecorder } from "react-media-recorder";
+import { useTimer } from "react-timer-hook";
 
 const CAPTURE_OPTIONS = {
   audio: false,
   video: { facingMode: "user" },
 };
 function RRCamera() {
+  const time = new Date();
+  const expiryTimestamp = time.setSeconds(time.getSeconds() + 30);
+
+  const { seconds, minutes, start, pause, restart } = useTimer({
+    expiryTimestamp,
+    autoStart: false,
+    onExpire: () => stopRecording(),
+  });
+
+  const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
+    useReactMediaRecorder({ ...CAPTURE_OPTIONS, audio: true });
+
   const videoRef = useRef(null);
 
   const getVideo = () => {
@@ -13,65 +26,97 @@ function RRCamera() {
       .getUserMedia(CAPTURE_OPTIONS)
       .then((stream) => {
         let video = videoRef.current;
-        video.srcObject = stream;
-        video.play();
+        if (video) {
+          video.srcObject = stream;
+          video.play();
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
   useEffect(() => {
-    getVideo();
-  }, [videoRef]);
+    if (status === "idle" || status === "recording") getVideo();
+    else {
+      let video = videoRef.current;
+      if (video) {
+        video.srcObject = mediaBlobUrl;
+      }
+    }
+  }, [videoRef, status, mediaBlobUrl]);
 
+  const handleRecord = () => {
+    if (status === "recording") {
+      stopRecording();
+      pause();
+    } else {
+      clearBlobUrl();
+      startRecording();
+      const time = new Date();
+      const expiryTimestamp = time.setSeconds(time.getSeconds() + 30);
+      if (seconds < 30) restart(expiryTimestamp);
+      else start();
+    }
+  };
+
+  let recordButtonClass =
+    "absolute left-1 bottom-1 bg-primaryRed p-5 rounded-full flex justify-center";
+  let recordingButtonClass =
+    "absolute left-1 bottom-1 bg-primaryRed  rounded-full flex justify-center p-3 left-3 bottom-3 rounded-md";
   return (
     <div>
-      <div className="relative">
-        <ReactMediaRecorder
-          video
-          MediaTrackConstraints={CAPTURE_OPTIONS}
-          render={({
-            status,
-            startRecording,
-            stopRecording,
-            mediaBlobUrl,
-            previewStream,
-          }) => (
-            <div>
-              <p>{status}</p>
-              <video ref={videoRef} width={800} height={600}></video>
-              <button
-                className="absolute inset-x-0 bottom-0"
-                onClick={startRecording}
-              >
-                start
-              </button>
-              <button onClick={stopRecording}>Stop </button>
-              {status === "stopped" ? (
-                <video src={mediaBlobUrl} controls autoPlay />
-              ) : (
-                <VideoPreview stream={previewStream} />
-              )}
-            </div>
+      <>
+        <div className="relative w-full">
+          {status === "stopped" ? (
+            <video
+              className="rounded-xl w-full"
+              src={mediaBlobUrl}
+              autoPlay
+              loop
+            />
+          ) : (
+            <video className="rounded-xl w-full" ref={videoRef}></video>
           )}
-        />
-      </div>
+          {status === "stopped" ? (
+            <>
+              <div className="absolute left-0  md:left-[14%] bottom-2 px-10 py-1 rounded-full  bg-red-800 opacity-80 ">
+                <button
+                  className="px-4 py-2 text-white font-bold"
+                  onClick={clearBlobUrl}
+                >
+                  Clear
+                </button>
+              </div>
+              <div className="absolute right-0 md:right-[14%]  bottom-2 px-4 py-1 sm:py-x-1 rounded-full  bg-Black2">
+                <button
+                  className="px-4 py-2 text-white font-bold"
+                  onClick={handleRecord}
+                >
+                  Take Again
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="absolute left-[45%]	top-3 px-2 bg-Black2 text-white font-medium text-xl rounded-md">
+                {minutes}:{seconds}
+              </div>
+              <div className="absolute left-[45%]	bottom-1 w-14 h-14 rounded-full border-4 border-white">
+                <button
+                  className={
+                    status === "recording"
+                      ? recordingButtonClass
+                      : recordButtonClass
+                  }
+                  onClick={handleRecord}
+                ></button>
+              </div>
+            </>
+          )}
+        </div>
+      </>
     </div>
   );
 }
 
 export default RRCamera;
-
-const VideoPreview = ({ stream }) => {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (videoRef.current && stream) {
-      videoRef.current.srcObject = stream;
-    }
-  }, [stream]);
-  if (!stream) {
-    return null;
-  }
-  return <video ref={videoRef} width={500} height={500} autoPlay />;
-};

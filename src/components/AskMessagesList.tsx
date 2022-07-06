@@ -5,11 +5,16 @@ import RRCamera from "../components/customComponents/RRCamera.jsx";
 
 function AskMessagesList() {
   const [open, setOpen] = useState(false);
+  const [isVideo, setIsVideo] = useState(false);
+
+  const handleOnChange = () => {
+    setIsVideo(!isVideo);
+  };
   return (
     <div className="relative w-1/2">
       <Button
         onClick={() => setOpen(true)}
-        className="mt-10 m-10 fixed bottom-4 left-10"
+        className="mt-10 m-10 fixed bottom-4 left-1/4"
       >
         Create an Ask Message
       </Button>
@@ -39,13 +44,17 @@ function AskMessagesList() {
           <div className="flex start">
             <input
               type="checkbox"
-              className="w-6 h-6 bg-gray-100 rounded border-gray-300 focus:none dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={isVideo}
+              onChange={handleOnChange}
+              className="w-6 h-6 bg-gray-100 rounded border-gray-300 focus:none  dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label className="uppercase mx-2">include video</label>
           </div>
-          <div className="flex start">
-            <RRCamera />
-          </div>
+          {isVideo && (
+            <div className="flex justify-center">
+              <RRCamera />
+            </div>
+          )}
         </div>
       </Modal>
     </div>
