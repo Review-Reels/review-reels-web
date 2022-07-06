@@ -5,7 +5,7 @@ import RRCamera from "../components/customComponents/RRCamera.jsx";
 
 function AskMessagesList() {
   const [open, setOpen] = useState(false);
-  const [isVideo, setIsVideo] = useState(false);
+  const [isVideo, setIsVideo] = useState(true);
 
   const handleOnChange = () => {
     setIsVideo(!isVideo);
@@ -51,7 +51,7 @@ function AskMessagesList() {
             <label className="uppercase mx-2">include video</label>
           </div>
           {isVideo && (
-            <div className="flex justify-center">
+            <div>
               <RRCamera />
             </div>
           )}
