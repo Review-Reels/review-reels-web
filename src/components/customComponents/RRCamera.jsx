@@ -3,6 +3,8 @@ import { useReactMediaRecorder } from "react-media-recorder";
 import { useTimer } from "react-timer-hook";
 import VideoCamIcon from "../../images/VideoCap.svg";
 
+import useCheckMobileScreen from "../../hooks/checkMobileDevice";
+
 const CAPTURE_OPTIONS = {
   audio: false,
   video: { facingMode: "user" },
@@ -34,6 +36,8 @@ function RRCamera() {
   const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
     useReactMediaRecorder({ ...CAPTURE_OPTIONS, audio: true });
 
+  const isMobile = useCheckMobileScreen();
+
   const videoRef = useRef(null);
 
   const [videoSrc, seVideoSrc] = useState("");
@@ -60,14 +64,16 @@ function RRCamera() {
       });
   };
   useEffect(() => {
-    if (status === "idle" || status === "recording") getVideo();
-    else {
-      let video = videoRef.current;
-      if (video) {
-        video.srcObject = mediaBlobUrl;
+    if (!isMobile) {
+      if (status === "idle" || status === "recording") getVideo();
+      else {
+        let video = videoRef.current;
+        if (video) {
+          video.srcObject = mediaBlobUrl;
+        }
       }
     }
-  }, [videoRef, status, mediaBlobUrl]);
+  }, [videoRef, status, mediaBlobUrl, isMobile]);
 
   const handleRecord = () => {
     if (status === "recording") {
