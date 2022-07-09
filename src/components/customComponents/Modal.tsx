@@ -29,7 +29,7 @@ function Modal({
                     {title}
                   </h3>
                   <button
-                    className="p-2 ml-auto bg-transparent border-0 text-Dove_Grey  float-right text-3xl leading-none font-semibold outline-none focus:outline-none rounded-full bg-Athens_Gray"
+                    className="p-2 ml-auto border-0 text-Athens_Gray  float-right text-3xl leading-none font-semibold outline-none focus:outline-none rounded-full bg-Dove_Grey"
                     onClick={() => handleClose(false)}
                   >
                     <X size={24} />

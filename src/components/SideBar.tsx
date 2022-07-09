@@ -14,18 +14,22 @@ import {
 } from "phosphor-react";
 import { NavLink } from "react-router-dom";
 import useCheckMobileScreen from "../hooks/checkMobileDevice";
+import { useStore } from "../store/UserStore";
 
 function SideBar() {
   const isMobile = useCheckMobileScreen();
+  const setUser = useStore((state) => state.setUser);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     if (isMobile) setHidden(true);
     else setHidden(false);
   }, [isMobile]);
-  const [hidden, setHidden] = useState(false);
+
   const signOut = () => {
-    console.log("signout");
+    setUser({});
   };
+
   let activeClassName =
     "flex items-center p-2 text-base font-normal text-gray-900 rounded-2xl dark:text-black hover:bg-Peach_Cream-dark dark:hover:bg-Peach_Cream-dark bg-Peach_Cream-dark";
   let normalClassName =
@@ -53,7 +57,7 @@ function SideBar() {
         <ul className="space-y-2  my-10">
           <li>
             <NavLink
-              to="/askMessage"
+              to="/askmessage"
               className={({ isActive }) =>
                 isActive ? activeClassName : normalClassName
               }
@@ -65,7 +69,7 @@ function SideBar() {
           </li>
           <li>
             <NavLink
-              to="/reviewLibrary"
+              to="/reviewlibrary"
               className={({ isActive }) =>
                 isActive ? activeClassName : normalClassName
               }
@@ -81,7 +85,7 @@ function SideBar() {
           </li>
           <li>
             <NavLink
-              to="/Inbox"
+              to="/inbox"
               className={({ isActive }) =>
                 isActive ? activeClassName : normalClassName
               }
@@ -97,7 +101,7 @@ function SideBar() {
           </li>
           <li>
             <NavLink
-              to="/Integrations"
+              to="/integrations"
               className={({ isActive }) =>
                 isActive ? activeClassName : normalClassName
               }
@@ -108,7 +112,7 @@ function SideBar() {
           </li>
           <li>
             <NavLink
-              to="/Pricing"
+              to="/pricing"
               className={({ isActive }) =>
                 isActive ? activeClassName : normalClassName
               }
@@ -119,7 +123,7 @@ function SideBar() {
           </li>
           <li>
             <NavLink
-              to="/Settings"
+              to="/settings"
               className={({ isActive }) =>
                 isActive ? activeClassName : normalClassName
               }
@@ -130,7 +134,7 @@ function SideBar() {
           </li>
           <li>
             <NavLink
-              to="/Help"
+              to="/help"
               className={({ isActive }) =>
                 isActive ? activeClassName : normalClassName
               }

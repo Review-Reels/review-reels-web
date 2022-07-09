@@ -1,11 +1,11 @@
 import React from "react";
-import LoggedInRoutes from "../LoggedInRoutes";
 import SideBar from "../components/SideBar";
+import { Outlet } from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="flex">
       <SideBar />
-      <LoggedInRoutes />
+      <Outlet />
     </div>
   );
 };

@@ -3,10 +3,21 @@ import logo from "../images/Logo.svg";
 import email from "../images/Email.svg";
 import GoogleButton from "../components/GoogleButton";
 import { Link } from "react-router-dom";
+import { googleSignIn } from "../apis/AuthApis";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "../store/UserStore";
 
 function SignInPage() {
-  const handleGoogleSignIn = (data: CredentialResponse) => {
-    console.log("djfh", data);
+  let navigate = useNavigate();
+  const setUser = useStore((state) => state.setUser);
+  const handleGoogleSignIn = async (data: CredentialResponse) => {
+    const { data: signInResponse } = await googleSignIn({
+      idToken: data.credential,
+    });
+    if (signInResponse) {
+      setUser(signInResponse);
+      navigate("/askmessage");
+    }
   };
 
   return (

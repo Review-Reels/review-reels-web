@@ -1,27 +1,11 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import AskMessages from "./pages/AskMessages";
-import ReviewLibrary from "./pages/ReviewLibrary";
-import Integrations from "./pages/Integrations";
-import Pricing from "./pages/Pricing";
-import Settings from "./pages/Settings";
-import Help from "./pages/Help";
-import Inbox from "./pages/Inbox";
+import { Outlet, Navigate } from "react-router-dom";
+import { useStore } from "./store/UserStore";
 
 function LoggedInRoutes() {
-  return (
-    <div className="h-full">
-      <Routes>
-        <Route path="/askMessage" element={<AskMessages />} />
-        <Route path="/reviewLibrary" element={<ReviewLibrary />} />
-        <Route path="/Inbox" element={<Inbox />} />
-        <Route path="/Integrations" element={<Integrations />} />
-        <Route path="/Pricing" element={<Pricing />} />
-        <Route path="/Settings" element={<Settings />} />
-        <Route path="/Help" element={<Help />} />
-      </Routes>
-    </div>
-  );
+  const user = useStore((state) => state.user);
+  const isSignedIn = Object.values(user).length > 0;
+  return isSignedIn ? <Outlet /> : <Navigate to="signin" />;
 }
 
 export default LoggedInRoutes;
