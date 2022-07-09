@@ -87,3 +87,18 @@ export type sendEmailPayload = {
   sendTo: Array<{ email: string; customerName: string }>;
   reviewRequestId: string;
 };
+
+export type AskMessage = {
+  id: string;
+  createdAt: string;
+  askMessage: string;
+  imageUrl: string;
+  size: number;
+  updatedAt: string;
+  userId: string;
+  videoUrl: string;
+};
+
+export interface AskMessages {
+  askMessages: [AskMessage] | [];
+}
