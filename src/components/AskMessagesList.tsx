@@ -8,22 +8,21 @@ import { AskMessages } from "../types";
 import { getUrl } from "../utils/S3Utils";
 function AskMessagesList({ askMessages }: AskMessages) {
   const [dropDown, setDropDown] = useState(false);
-  console.log(askMessages);
   return (
     <div>
       {askMessages.map((item) => {
-        const { askMessage, createdAt, imageUrl, id } = item;
+        const { askMessage, createdAt, imageUrl, id, name } = item;
         return (
-          <div className="flex p-2 rounded-xl shadow-md flex-col">
-            <div className="flex p-2 gap-5 ">
-              <div className="flex p-2 gap-5  w-full">
+          <div className="flex p-2 rounded-xl shadow-md flex-col " key={id}>
+            <div className="flex p-2 md:gap-5">
+              <div className="flex flex-col md:flex-row p-2 gap-5 w-full">
                 <img
                   src={getUrl(imageUrl)}
                   alt={id}
-                  className="h-[121px] w=[85px] rounded-xl"
+                  className="h-400 md:h-[121px] w=[85px] rounded-xl"
                 />
                 <div className="flex flex-col text-justify">
-                  <h3 className="text-lg font-medium">Ask message 1</h3>
+                  <h3 className="text-lg font-medium">{name}</h3>
                   <p className="text-slate-600 text-justify break-all">
                     {askMessage}
                   </p>
@@ -37,7 +36,7 @@ function AskMessagesList({ askMessages }: AskMessages) {
                 {dropDown && (
                   <div
                     className={
-                      "z-10 bg-Peach_Cream-normal  absolute  divide-Peach_Cream-dark shadow rounded-xl"
+                      "z-10 bg-Peach_Cream-normal absolute right-0  divide-Peach_Cream-dark shadow rounded-xl"
                     }
                   >
                     <ul className="p-2 text-sm text-black dark:text-black">

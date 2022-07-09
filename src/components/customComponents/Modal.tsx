@@ -19,7 +19,7 @@ function Modal({
     <>
       {open ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <div className="modal fade fixed top-0 left-0  w-full h-full outline-none overflow-x-hidden overflow-y-auto z-50">
             <div className="relative w-auto my-6 mx-auto max-w-3xl ">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -36,7 +36,7 @@ function Modal({
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto h-[42rem] overflow-scroll">
+                <div className="relative p-6 flex-auto min-h-[42rem] max-h- overflow-scroll">
                   {children}
                 </div>
                 {/*footer*/}

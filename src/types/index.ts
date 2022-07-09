@@ -91,6 +91,7 @@ export type sendEmailPayload = {
 export type AskMessage = {
   id: string;
   createdAt: string;
+  name: string;
   askMessage: string;
   imageUrl: string;
   size: number;

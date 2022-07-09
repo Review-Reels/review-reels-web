@@ -37,7 +37,7 @@ const AskMessages = () => {
   }, []);
   return (
     <Fragment>
-      <div className="flex justify-between flex-auto bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] m-10">
+      <div className=" bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] md:m-10  overflow-y-scroll h-screen">
         <AskMessagesList askMessages={askMessages} />
         <div className="relative w-1/2">
           <Button
