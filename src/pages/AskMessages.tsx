@@ -37,15 +37,12 @@ const AskMessages = () => {
   }, []);
   return (
     <Fragment>
-      <div className=" bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] md:m-10  overflow-y-scroll h-screen">
+      <div className="bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] md:m-10  overflow-y-scroll h-screen">
         <AskMessagesList askMessages={askMessages} />
-        <div className="relative w-1/2">
-          <Button
-            onClick={() => setOpen(true)}
-            className="mt-10 m-10 fixed bottom-4 left-1/4"
-          >
-            Create an Ask Message
-          </Button>
+        <div className="relative">
+          <div className="fixed bottom-4 left-1/4 md:left-1/2 md:right-1/2 md:w-full">
+            <Button onClick={() => setOpen(true)}>Create an Ask Message</Button>
+          </div>
           <Modal
             open={open}
             handleClose={setOpen}

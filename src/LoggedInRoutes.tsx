@@ -4,7 +4,7 @@ import { useStore } from "./store/UserStore";
 
 function LoggedInRoutes() {
   const user = useStore((state) => state.user);
-  const isSignedIn = Object.values(user).length > 0;
+  const isSignedIn = user && user;
   return isSignedIn ? <Outlet /> : <Navigate to="signin" />;
 }
 

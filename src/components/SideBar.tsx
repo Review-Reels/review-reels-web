@@ -18,7 +18,7 @@ import { useStore } from "../store/UserStore";
 
 function SideBar() {
   const isMobile = useCheckMobileScreen();
-  const setUser = useStore((state) => state.setUser);
+  const resetUser = useStore((state) => state.resetUser);
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function SideBar() {
   }, [isMobile]);
 
   const signOut = () => {
-    setUser({});
+    resetUser();
   };
 
   let activeClassName =

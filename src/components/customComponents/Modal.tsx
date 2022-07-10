@@ -4,7 +4,7 @@ import Button from "./Button";
 interface Props {
   title?: string;
   open: boolean;
-  PrimaryButtonTitle: string;
+  PrimaryButtonTitle?: string;
   handleClose: (value: boolean) => void;
   children?: ReactNode;
 }
@@ -40,11 +40,13 @@ function Modal({
                   {children}
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-center p-6 border-slate-200 rounded-b">
-                  <Button onClick={() => handleClose(false)}>
-                    {PrimaryButtonTitle}
-                  </Button>
-                </div>
+                {PrimaryButtonTitle && (
+                  <div className="flex items-center justify-center p-6 border-slate-200 rounded-b">
+                    <Button onClick={() => handleClose(false)}>
+                      {PrimaryButtonTitle}
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
