@@ -23,7 +23,7 @@ function AllRoutes() {
           <Route path="signin" element={<SignInPage />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route path="email" element={<EmailSignIn />} />
-          <Route path="view/:username" element={<ViewAskMessage />} />
+          <Route path="view/:requestId" element={<ViewAskMessage />} />
           <Route element={<LoggedInRoutes />}>
             <Route path="/" element={<HomePage />}>
               <Route path="askmessage" element={<AskMessages />} />

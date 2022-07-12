@@ -1,6 +1,6 @@
 import { S3_URL, WEB_APP_URL } from "../constants/ApiUrls";
 
-export const getUrl = (url: string): string => {
+export const getUrl = (url: string | undefined): string => {
   return `${S3_URL}${url}`;
 };
 

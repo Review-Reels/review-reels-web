@@ -6,12 +6,14 @@ interface Props {
   open: boolean;
   PrimaryButtonTitle?: string;
   handleClose: (value: boolean) => void;
+  handlePrimaryAction: (value: boolean) => void;
   children?: ReactNode;
 }
 function Modal({
   open,
   title,
   handleClose,
+  handlePrimaryAction,
   children,
   PrimaryButtonTitle,
 }: Props) {
@@ -42,7 +44,10 @@ function Modal({
                 {/*footer*/}
                 {PrimaryButtonTitle && (
                   <div className="flex items-center justify-center p-6 border-slate-200 rounded-b">
-                    <Button onClick={() => handleClose(false)}>
+                    <Button
+                      className="bg-primaryRed shadow-lg  drop-shadow-md"
+                      onClick={() => handlePrimaryAction(true)}
+                    >
                       {PrimaryButtonTitle}
                     </Button>
                   </div>

@@ -6,8 +6,9 @@ import Modal from "../components/customComponents/Modal";
 import Button from "../components/customComponents/Button";
 import RRCamera from "../components/customComponents/RRCamera.jsx";
 
-import { getReviewRequest } from "../apis/AskMessageApis";
+import { getReviewRequest, createReviewRequest } from "../apis/AskMessageApis";
 import { AskMessage as AskMessagesType } from "../types";
+
 const AskMessages = () => {
   const [askMessages, setAskMessages] = useState<[AskMessagesType] | []>([]);
   const [showToast, setShowToast] = useState({
@@ -17,6 +18,10 @@ const AskMessages = () => {
   });
   const [open, setOpen] = useState(false);
   const [isVideo, setIsVideo] = useState(true);
+  const [recordedVideo, setRecordedVideo] = useState<string>("");
+  const [videoType, setVideoType] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
   const handleOnChange = () => {
     setIsVideo(!isVideo);
@@ -35,19 +40,44 @@ const AskMessages = () => {
         });
       });
   }, []);
+
+  const saveAskMessage = async () => {
+    let formData = new FormData();
+    let blob = await fetch(recordedVideo).then((r) => r.blob());
+    console.log(blob);
+
+    formData.append("fileName", blob);
+    formData.append("name", name);
+    formData.append("askMessage", message);
+    formData.append("extension", videoType);
+
+    createReviewRequest(formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <Fragment>
-      <div className="bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] md:m-10  overflow-y-scroll h-screen">
+      <div className="bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] md:m-10  ">
         <AskMessagesList askMessages={askMessages} />
         <div className="relative">
-          <div className="fixed bottom-4 left-1/4 md:left-1/2 md:right-1/2 md:w-full">
-            <Button onClick={() => setOpen(true)}>Create an Ask Message</Button>
+          <div className="fixed bottom-4 left-1/4 md:left-1/2 md:right-1/2 md:w-full ">
+            <Button
+              className="bg-primaryRed shadow-lg  drop-shadow-md"
+              onClick={() => setOpen(true)}
+            >
+              Create an Ask Message
+            </Button>
           </div>
           <Modal
             open={open}
             handleClose={setOpen}
             title="Create new Ask message here"
             PrimaryButtonTitle="Save Ask Message"
+            handlePrimaryAction={saveAskMessage}
           >
             <div className="flex flex-col space-y-5">
               <div className="bg-Peach_Cream-normal rounded p-2">
@@ -56,11 +86,20 @@ const AskMessages = () => {
               </div>
               <div className="flex flex-col">
                 <label className="uppercase mb-2">ask message name</label>
-                <input type="text" className="p-3 bg-Athens_Gray" />
+                <input
+                  type="text"
+                  className="p-3 bg-Athens_Gray"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div className="flex flex-col">
                 <label className="uppercase mb-2">ask message</label>
-                <textarea className="p-3  bg-Athens_Gray" />
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="p-3  bg-Athens_Gray"
+                />
               </div>
               <div className="flex flex-col">
                 <label className="uppercase mb-2">
@@ -79,7 +118,12 @@ const AskMessages = () => {
               </div>
               {isVideo && (
                 <div>
-                  <RRCamera />
+                  <RRCamera
+                    onVideoRecorded={(recordedVideo: string, type: string) => {
+                      setRecordedVideo(recordedVideo);
+                      setVideoType(type);
+                    }}
+                  />
                 </div>
               )}
             </div>
