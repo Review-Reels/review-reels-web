@@ -37,7 +37,7 @@ function SideBar() {
   let sidebarNameClass = hidden ? "hidden" : "flex-1 ml-3 whitespace-nowrap";
 
   return (
-    <aside className="h-screen" aria-label="Sidebar">
+    <aside aria-label="Sidebar">
       <div className="overflow-y-auto py-4 px-3 bg-Peach_Cream-normal  dark:bg-Peach_Cream-normal  h-screen">
         {hidden ? (
           <div className="ml-3 mb-5">

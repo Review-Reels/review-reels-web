@@ -17,3 +17,7 @@ export const createReviewRequest = async (payload: FormData) => {
     },
   });
 };
+
+export const deleteReviewRequest = async (id: string) => {
+  return axios.delete(`review/reviewRequest/${id}`);
+};

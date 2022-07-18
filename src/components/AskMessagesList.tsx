@@ -6,20 +6,32 @@ import {
   Copy,
   Export,
 } from "phosphor-react";
-import { AskMessages, AskMessage } from "../types";
+import { AskMessage } from "../types";
 import { getUrl, getWebUrl } from "../utils/S3Utils";
+import { deleteReviewRequest } from "../apis/AskMessageApis";
 import Modal from "../components/customComponents/Modal";
 import playButton from "../images/PlayButton.svg";
 
 import { Link } from "react-router-dom";
 import Button from "../components/customComponents/Button";
-function AskMessagesList({ askMessages }: AskMessages) {
-  const [dropDown, setDropDown] = useState(false);
+import Toast from "../components/customComponents/Toast";
+
+interface propType {
+  askMessages: AskMessage[];
+  handleDelete: (id: string) => void;
+}
+
+function AskMessagesList({ askMessages, handleDelete }: propType) {
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [askMessage, setAskMessage] = useState<AskMessage>();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
+  const [showToast, setShowToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
 
   const handlePlay = () => {
     if (videoRef?.current?.paused) {
@@ -30,8 +42,22 @@ function AskMessagesList({ askMessages }: AskMessages) {
       setPlaying(false);
     }
   };
+  const deleteAskMessage = async (id: string) => {
+    try {
+      await deleteReviewRequest(id);
+      handleDelete(id);
+      setShowToast({ show: true, message: "Deleted", type: "success" });
+    } catch (err) {
+      setShowToast({
+        show: true,
+        message: "Something went wrong!",
+        type: "failure",
+      });
+      console.log(err);
+    }
+  };
   return (
-    <div className="h-full">
+    <div className="w-full">
       <div className="w-full flex justify-center mx-4 my-2">
         <input
           type="text"
@@ -39,24 +65,30 @@ function AskMessagesList({ askMessages }: AskMessages) {
           placeholder="Search.."
         />
       </div>
-      <div className="max-h-screen overflow-y-scroll md:h-auto">
-        {askMessages.map((item) => {
+      <div className="max-h-[45rem] overflow-y-scroll md:h-auto">
+        {askMessages.map((item, index) => {
           const { askMessage, createdAt, imageUrl, id, name } = item;
           return (
             <div className="flex p-2 rounded-xl shadow-md flex-col" key={id}>
-              <div className="flex p-2 md:gap-5 cursor-pointer">
+              <div className="flex p-2 md:gap-5 cursor-pointer  flex-col-reverse md:flex-row ">
                 <div
-                  className="flex flex-col md:flex-row p-2 gap-5 w-full"
+                  className="flex flex-col md:flex-row p-2 gap-5 w-full md:min-w-[40rem]"
                   onClick={() => {
                     setAskMessage(item);
                     setOpen(true);
                   }}
                 >
-                  <img
-                    src={getUrl(imageUrl)}
-                    alt={id}
-                    className="h-400 md:h-[121px] w=[85px] rounded-xl"
-                  />
+                  {imageUrl ? (
+                    <img
+                      src={getUrl(imageUrl)}
+                      alt={id}
+                      className="h-400 md:h-[121px] w=[85px] rounded-xl"
+                    />
+                  ) : (
+                    <div className="flex md:h-[121px] w-full md:w-24 h-80 rounded-xl bg-Peach_Orange uppercase justify-center items-center	text-white text-4xl">
+                      {name.charAt(0)}
+                    </div>
+                  )}
                   <div className="flex flex-col text-justify">
                     <h3 className="text-lg font-medium">{name}</h3>
                     <p className="text-slate-600 text-justify break-word">
@@ -64,33 +96,17 @@ function AskMessagesList({ askMessages }: AskMessages) {
                     </p>
                   </div>
                 </div>
-                <div
-                  className="cursor-pointer relative"
-                  onClick={() => setDropDown(!dropDown)}
-                >
-                  <DotsThreeOutlineVertical size={24} />
-                  {dropDown && (
-                    <div
-                      className={
-                        "z-10 bg-Peach_Cream-normal absolute right-0  divide-Peach_Cream-dark shadow rounded-xl"
-                      }
-                    >
-                      <ul className="p-2 text-sm text-black dark:text-black">
-                        <li className="hover:bg-Peach_Cream-dark rounded-xl">
-                          <div className="flex items-center  ">
-                            <PencilSimple size={18} />
-                            <p className="block px-2 py-2  ">Edit</p>
-                          </div>
-                        </li>
-                        <li className="hover:bg-Peach_Cream-dark rounded-xl">
-                          <div className="flex items-center ">
-                            <TrashSimple size={18} />
-                            <p className="block px-2 py-2 ">Delete</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  )}
+                <div className="cursor-pointer flex gap-2 justify-end px-2 py-4">
+                  <PencilSimple
+                    size={28}
+                    onClick={() => console.log("jhgh")}
+                    weight="bold"
+                  />
+                  <TrashSimple
+                    weight="bold"
+                    size={28}
+                    onClick={() => deleteAskMessage(id)}
+                  />
                 </div>
               </div>
               <div className="self-end font-thin text-xs">{createdAt}</div>
@@ -164,7 +180,13 @@ function AskMessagesList({ askMessages }: AskMessages) {
             <p>{askMessage?.askMessage}</p>
           </div>
         </div>
-      </Modal>
+      </Modal>{" "}
+      <Toast
+        showToast={showToast.show}
+        onClose={(value) => setShowToast((prev) => ({ ...prev, show: value }))}
+        toastMessage={showToast.message}
+        type={showToast.type}
+      />
     </div>
   );
 }

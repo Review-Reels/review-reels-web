@@ -5,6 +5,7 @@ interface Props {
   title?: string;
   open: boolean;
   PrimaryButtonTitle?: string;
+  loading?: boolean;
   handleClose: (value: boolean) => void;
   handlePrimaryAction: (value: boolean) => void;
   children?: ReactNode;
@@ -16,6 +17,7 @@ function Modal({
   handlePrimaryAction,
   children,
   PrimaryButtonTitle,
+  loading,
 }: Props) {
   return (
     <>
@@ -47,6 +49,7 @@ function Modal({
                     <Button
                       className="bg-primaryRed shadow-lg  drop-shadow-md"
                       onClick={() => handlePrimaryAction(true)}
+                      loading={loading}
                     >
                       {PrimaryButtonTitle}
                     </Button>

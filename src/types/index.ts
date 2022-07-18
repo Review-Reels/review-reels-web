@@ -101,5 +101,5 @@ export type AskMessage = {
 };
 
 export interface AskMessages {
-  askMessages: [AskMessage] | [];
+  askMessages: AskMessage[] | [];
 }

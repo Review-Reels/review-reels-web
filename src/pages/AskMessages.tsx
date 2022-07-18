@@ -7,10 +7,10 @@ import Button from "../components/customComponents/Button";
 import RRCamera from "../components/customComponents/RRCamera.jsx";
 
 import { getReviewRequest, createReviewRequest } from "../apis/AskMessageApis";
-import { AskMessage as AskMessagesType } from "../types";
+import { AskMessage as AskMessageType } from "../types";
 
 const AskMessages = () => {
-  const [askMessages, setAskMessages] = useState<[AskMessagesType] | []>([]);
+  const [askMessages, setAskMessages] = useState<AskMessageType[] | []>([]);
   const [showToast, setShowToast] = useState({
     show: false,
     message: "",
@@ -22,6 +22,7 @@ const AskMessages = () => {
   const [videoType, setVideoType] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleOnChange = () => {
     setIsVideo(!isVideo);
@@ -42,27 +43,42 @@ const AskMessages = () => {
   }, []);
 
   const saveAskMessage = async () => {
+    setLoading(true);
     let formData = new FormData();
     let blob = await fetch(recordedVideo).then((r) => r.blob());
-    console.log(blob);
 
-    formData.append("fileName", blob);
+    if (isVideo && recordedVideo) {
+      formData.append("fileName", blob);
+      formData.append("extension", videoType);
+    }
     formData.append("name", name);
     formData.append("askMessage", message);
-    formData.append("extension", videoType);
 
     createReviewRequest(formData)
       .then((res) => {
-        console.log(res);
+        const data: AskMessageType = res.data;
+        const addedMessage = [{ ...data }, ...askMessages];
+        setAskMessages(addedMessage);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+        setOpen(false);
       });
   };
+  const handleDelete = (id: string) => {
+    setAskMessages((prev) => prev.filter((item) => item.id !== id));
+  };
+
   return (
     <Fragment>
       <div className="bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] md:m-10  ">
-        <AskMessagesList askMessages={askMessages} />
+        <AskMessagesList
+          askMessages={askMessages}
+          handleDelete={handleDelete}
+        />
         <div className="relative">
           <div className="fixed bottom-4 left-1/4 md:left-1/2 md:right-1/2 md:w-full ">
             <Button
@@ -75,6 +91,7 @@ const AskMessages = () => {
           <Modal
             open={open}
             handleClose={setOpen}
+            loading={loading}
             title="Create new Ask message here"
             PrimaryButtonTitle="Save Ask Message"
             handlePrimaryAction={saveAskMessage}
