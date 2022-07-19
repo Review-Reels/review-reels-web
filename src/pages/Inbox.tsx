@@ -6,7 +6,6 @@ import { getElapsedTime } from "../utils/Time";
 import Toast from "../components/customComponents/Toast";
 import { colorList } from "../constants/ColorList";
 import Modal from "../components/customComponents/Modal";
-import playButton from "../images/PlayButton.svg";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -16,7 +15,7 @@ function Inbox() {
     null
   );
   const [open, setOpen] = useState(false);
-  const [playing, setPlaying] = useState(false);
+
   const [showToast, setShowToast] = useState({
     show: false,
     message: "",
@@ -38,16 +37,6 @@ function Inbox() {
         });
       });
   }, []);
-
-  const handlePlay = () => {
-    if (videoRef?.current?.paused) {
-      videoRef?.current?.play();
-      setPlaying(true);
-    } else {
-      videoRef?.current?.pause();
-      setPlaying(false);
-    }
-  };
 
   return (
     <Fragment>
@@ -92,12 +81,16 @@ function Inbox() {
                     <h3 className="text-Black2 font-bold	text-xl">
                       {customerName}
                     </h3>
-                    <h6 className="text-Black2 text-lg">
-                      {requestMessageId
-                        ? "shared a video review"
-                        : "Send Email"}
-                      <div>{getElapsedTime(updatedAt)}</div>
-                    </h6>
+                    <div className="flex gap-4">
+                      <h6 className="text-Black2 text-lg">
+                        {requestMessageId
+                          ? "shared a video review"
+                          : "Send Email"}
+                      </h6>
+                      <ul className="text-Black2 text-lg list-outside list-disc ml-2">
+                        <li>{getElapsedTime(updatedAt)}</li>
+                      </ul>
+                    </div>
                   </div>
 
                   {imageUrl && !isRead && (
@@ -105,7 +98,7 @@ function Inbox() {
                       <img
                         src={getUrl(imageUrl)}
                         alt="response"
-                        className="w-8 rounded-lg"
+                        className="w-12 rounded-lg md:ml-10"
                       />
                     </div>
                   )}
@@ -122,27 +115,22 @@ function Inbox() {
           toastMessage={showToast.message}
           type={showToast.type}
         />
-        <Modal
-          open={open}
-          handleClose={setOpen}
-          handlePrimaryAction={() => console.log("dhjd")}
-        >
+        <Modal open={open} handleClose={setOpen}>
           <div>
-            <div
-              className="relative flex justify-center items-center cursor-pointer"
-              onClick={handlePlay}
-            >
-              <video
-                className=" md:w-1/2 lg:w-1/2"
-                src={getUrl(reviewResponse?.videoUrl)}
-                ref={videoRef}
-              ></video>
-              {!playing && (
-                <div className="absolute justify-center items-center">
-                  <img src={playButton} alt="play button hover:scale-50" />
-                </div>
-              )}
-            </div>
+            {reviewResponse?.videoUrl ? (
+              <div className="relative flex justify-center items-center cursor-pointer">
+                <video
+                  className=" md:w-1/2 lg:w-1/2"
+                  src={getUrl(reviewResponse?.videoUrl)}
+                  ref={videoRef}
+                  controls
+                ></video>
+              </div>
+            ) : (
+              <div className="mt-4 text-center text-lg	font-base	">
+                <p>{reviewResponse?.replyMessage}</p>
+              </div>
+            )}
             <div className="mt-4 text-center text-lg	font-semibold	">
               <p>{reviewResponse?.customerName}</p>
             </div>

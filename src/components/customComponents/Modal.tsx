@@ -7,7 +7,7 @@ interface Props {
   PrimaryButtonTitle?: string;
   loading?: boolean;
   handleClose: (value: boolean) => void;
-  handlePrimaryAction: (value: boolean) => void;
+  handlePrimaryAction?: (value: boolean) => void;
   children?: ReactNode;
 }
 function Modal({
@@ -44,7 +44,7 @@ function Modal({
                   {children}
                 </div>
                 {/*footer*/}
-                {PrimaryButtonTitle && (
+                {PrimaryButtonTitle && handlePrimaryAction && (
                   <div className="flex items-center justify-center p-6 border-slate-200 rounded-b">
                     <Button
                       className="bg-primaryRed shadow-lg  drop-shadow-md"
