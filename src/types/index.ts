@@ -66,6 +66,7 @@ export type SignupPayload = {
 export type googleSignUpPayload = {
   idToken?: string;
 };
+
 export type signInPayload = {
   email: string;
   password: string;

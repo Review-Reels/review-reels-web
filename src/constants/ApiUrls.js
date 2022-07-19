@@ -12,6 +12,8 @@ export const WEB_APP_URL =
 // export const WEB_APP_URL = "https://review.reviewreels.app/";
 
 // export const BACKEND_URL = "http://3.108.151.164/api/";
+
+// export const BACKEND_URL = "http://test.reviewreels.app/api/";
 export const BACKEND_URL = "http://127.0.0.1:3000/api/";
 
 //prod
