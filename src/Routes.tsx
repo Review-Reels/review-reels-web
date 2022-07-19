@@ -14,6 +14,7 @@ import Help from "./pages/Help";
 import Inbox from "./pages/Inbox";
 import NotFound from "./pages/NotFound";
 import ViewAskMessage from "./pages/ViewAskMessage";
+import ThankYou from "./pages/ThankYou";
 
 function AllRoutes() {
   return (
@@ -24,6 +25,7 @@ function AllRoutes() {
           <Route path="signup" element={<SignUpPage />} />
           <Route path="email" element={<EmailSignIn />} />
           <Route path="view/:requestId" element={<ViewAskMessage />} />
+          <Route path="thankyou" element={<ThankYou />} />
           <Route element={<LoggedInRoutes />}>
             <Route path="/" element={<HomePage />}>
               <Route path="askmessage" element={<AskMessages />} />

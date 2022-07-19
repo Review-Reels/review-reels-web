@@ -1,11 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  DotsThreeOutlineVertical,
-  PencilSimple,
-  TrashSimple,
-  Copy,
-  Export,
-} from "phosphor-react";
+import { PencilSimple, TrashSimple, Copy, Export } from "phosphor-react";
 import { AskMessage } from "../types";
 import { getUrl, getWebUrl } from "../utils/S3Utils";
 import { deleteReviewRequest } from "../apis/AskMessageApis";
@@ -82,7 +76,7 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
                     <img
                       src={getUrl(imageUrl)}
                       alt={id}
-                      className="h-400 md:h-[121px] w=[85px] rounded-xl"
+                      className="h-400 md:h-[121px] rounded-xl"
                     />
                   ) : (
                     <div className="flex md:h-[121px] w-full md:w-24 h-80 rounded-xl bg-Peach_Orange uppercase justify-center items-center	text-white text-4xl">
@@ -180,7 +174,7 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
             <p>{askMessage?.askMessage}</p>
           </div>
         </div>
-      </Modal>{" "}
+      </Modal>
       <Toast
         showToast={showToast.show}
         onClose={(value) => setShowToast((prev) => ({ ...prev, show: value }))}

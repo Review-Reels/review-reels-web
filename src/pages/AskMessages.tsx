@@ -118,12 +118,12 @@ const AskMessages = () => {
                   className="p-3  bg-Athens_Gray"
                 />
               </div>
-              <div className="flex flex-col">
+              {/* <div className="flex flex-col">
                 <label className="uppercase mb-2">
                   questions on ask message
                 </label>
                 <textarea className="p-3  bg-Athens_Gray" />
-              </div>
+              </div> */}
               <div className="flex start">
                 <input
                   type="checkbox"
