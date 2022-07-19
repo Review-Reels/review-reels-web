@@ -103,3 +103,18 @@ export type AskMessage = {
 export interface AskMessages {
   askMessages: AskMessage[] | [];
 }
+
+export type ReviewResponse = {
+  id: string;
+  replyMessage: string;
+  customerName: string;
+  whatYouDo: string;
+  imageUrl: string;
+  videoUrl: string;
+  size: number;
+  isRead: boolean;
+  createdAt: string;
+  updatedAt: string;
+  requestMessageId: string;
+  EmailTracker: [];
+};

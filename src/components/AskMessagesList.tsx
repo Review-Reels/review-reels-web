@@ -9,7 +9,7 @@ import playButton from "../images/PlayButton.svg";
 import { Link } from "react-router-dom";
 import Button from "../components/customComponents/Button";
 import Toast from "../components/customComponents/Toast";
-
+import { colorList } from "../constants/ColorList";
 interface propType {
   askMessages: AskMessage[];
   handleDelete: (id: string) => void;
@@ -79,7 +79,11 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
                       className="h-400 md:h-[121px] rounded-xl"
                     />
                   ) : (
-                    <div className="flex md:h-[121px] w-full md:w-24 h-80 rounded-xl bg-Peach_Orange uppercase justify-center items-center	text-white text-4xl">
+                    <div
+                      className={`flex md:h-[121px] w-full md:w-24 h-80 rounded-xl  uppercase justify-center items-center	text-white text-4xl bg-${
+                        colorList[index % 3]
+                      }`}
+                    >
                       {name.charAt(0)}
                     </div>
                   )}
