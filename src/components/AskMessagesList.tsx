@@ -4,7 +4,6 @@ import { AskMessage } from "../types";
 import { getUrl, getWebUrl } from "../utils/S3Utils";
 import { deleteReviewRequest } from "../apis/AskMessageApis";
 import Modal from "../components/customComponents/Modal";
-import playButton from "../images/PlayButton.svg";
 
 import { Link } from "react-router-dom";
 import Button from "../components/customComponents/Button";
@@ -17,7 +16,7 @@ interface propType {
 
 function AskMessagesList({ askMessages, handleDelete }: propType) {
   const [open, setOpen] = useState(false);
-  const [playing, setPlaying] = useState(false);
+
   const [askMessage, setAskMessage] = useState<AskMessage>();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
@@ -27,15 +26,6 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
     type: "success",
   });
 
-  const handlePlay = () => {
-    if (videoRef?.current?.paused) {
-      videoRef?.current?.play();
-      setPlaying(true);
-    } else {
-      videoRef?.current?.pause();
-      setPlaying(false);
-    }
-  };
   const deleteAskMessage = async (id: string) => {
     try {
       await deleteReviewRequest(id);
@@ -159,21 +149,16 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
               </Button>
             </div>
           </div>
-          <div
-            className="relative flex justify-center items-center cursor-pointer"
-            onClick={handlePlay}
-          >
-            <video
-              className=" md:w-1/2 lg:w-1/2"
-              src={getUrl(askMessage?.videoUrl)}
-              ref={videoRef}
-            ></video>
-            {!playing && (
-              <div className="absolute justify-center items-center">
-                <img src={playButton} alt="play button hover:scale-50" />
-              </div>
-            )}
-          </div>
+          {askMessage?.videoUrl && (
+            <div className="relative flex justify-center items-center cursor-pointer">
+              <video
+                className=" md:w-1/2 lg:w-1/2"
+                src={getUrl(askMessage?.videoUrl)}
+                ref={videoRef}
+                controls
+              ></video>
+            </div>
+          )}
           <div className="mt-4 text-center text-lg	font-semibold	">
             <p>{askMessage?.askMessage}</p>
           </div>

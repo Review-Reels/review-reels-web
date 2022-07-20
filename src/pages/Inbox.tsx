@@ -69,11 +69,11 @@ function Inbox() {
               >
                 <div className="flex justify-center items-center gap-1">
                   <div
-                    className={`flex rounded-full  w-16 h-16 min-w-16 min-h-16 justify-center items-center bg-${
+                    className={`flex rounded-full w-12 h-12 md:w-16 md:h-16 justify-center items-center bg-${
                       colorList[index % 3]
                     }`}
                   >
-                    <p className="text-3xl text-white uppercase">
+                    <p className="text-l md:text-3xl text-white uppercase">
                       {customerName.charAt(0)}
                     </p>
                   </div>

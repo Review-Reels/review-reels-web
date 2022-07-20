@@ -40,7 +40,7 @@ function Modal({
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto min-h-[42rem] max-h- overflow-scroll">
+                <div className="relative p-6 flex-auto  overflow-scroll">
                   {children}
                 </div>
                 {/*footer*/}
