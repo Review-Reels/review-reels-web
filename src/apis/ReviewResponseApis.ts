@@ -1,4 +1,4 @@
-// import { googleSignUpPayload } from "../types";
+import { UpdateIsRead } from "../types";
 
 import axios from "./axios";
 
@@ -16,6 +16,10 @@ export const createReviewResponse = async (payload: FormData) => {
       "Content-Type": "multipart/form-data",
     },
   });
+};
+
+export const updateIsRead = async (payload: UpdateIsRead, id: string) => {
+  return axios.put(`review/reviewResponse/${id}`, payload);
 };
 
 export const deleteReviewResponse = async (id: string) => {

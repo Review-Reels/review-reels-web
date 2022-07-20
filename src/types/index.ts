@@ -119,3 +119,7 @@ export type ReviewResponse = {
   requestMessageId: string;
   EmailTracker: [];
 };
+
+export interface UpdateIsRead {
+  isRead: boolean;
+}

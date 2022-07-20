@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import { getReviewResponse } from "../apis/ReviewResponseApis";
+import { getReviewResponse, updateIsRead } from "../apis/ReviewResponseApis";
 import { ReviewResponse } from "../types";
 import { getUrl } from "../utils/S3Utils";
 import { getElapsedTime } from "../utils/Time";
@@ -26,7 +26,6 @@ function Inbox() {
   useEffect(() => {
     getReviewResponse()
       .then((res) => {
-        console.log(res);
         setReviewResponses(res.data);
       })
       .catch((err) => {
@@ -37,6 +36,17 @@ function Inbox() {
         });
       });
   }, []);
+
+  const handleOpen = async (response: ReviewResponse) => {
+    setReviewResponse(response);
+    setOpen(true);
+    try {
+      if (response && !response.isRead)
+        await updateIsRead({ isRead: true }, response.id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Fragment>
@@ -62,10 +72,7 @@ function Inbox() {
               <div
                 className="flex border-b-2 border-Black7 cursor-pointer"
                 key={id}
-                onClick={() => {
-                  setReviewResponse(reviewResponse);
-                  setOpen(true);
-                }}
+                onClick={() => handleOpen(reviewResponse)}
               >
                 <div className="flex justify-center items-center gap-1">
                   <div
@@ -78,16 +85,30 @@ function Inbox() {
                     </p>
                   </div>
                   <div className="flex flex-col justify-center m-4">
-                    <h3 className="text-Black2 font-bold	text-xl">
+                    <h3
+                      className={`${
+                        isRead ? "text-Black2" : "text-black"
+                      } font-bold	text-xl`}
+                    >
                       {customerName}
                     </h3>
                     <div className="flex gap-4">
-                      <h6 className="text-Black2 text-lg">
+                      <h6
+                        className={`${
+                          isRead ? "text-Black2" : "text-black"
+                        } text-lg`}
+                      >
                         {requestMessageId
-                          ? "shared a video review"
+                          ? imageUrl
+                            ? "shared a video review"
+                            : "shared a text review"
                           : "Send Email"}
                       </h6>
-                      <ul className="text-Black2 text-lg list-outside list-disc ml-2">
+                      <ul
+                        className={` ${
+                          isRead ? "text-Black2" : "text-black"
+                        } text-lg list-outside list-disc ml-2`}
+                      >
                         <li>{getElapsedTime(updatedAt)}</li>
                       </ul>
                     </div>
