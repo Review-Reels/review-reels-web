@@ -46,7 +46,7 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
       <div className="w-full flex justify-center mx-4 my-2">
         <input
           type="text"
-          className="p-3 pl-10 bg-Athens_Gray w-full rounded-xl focus:text-gray-700  focus:border-blue-600 focus:outline-none"
+          className="mr-2 md:mr-10 p-3 pl-10  w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
           placeholder="Search.."
         />
       </div>
@@ -54,7 +54,10 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
         {askMessages.map((item, index) => {
           const { askMessage, createdAt, imageUrl, id, name } = item;
           return (
-            <div className="flex p-2 rounded-xl shadow-md flex-col" key={id}>
+            <div
+              className="flex m-2 rounded-xl shadow-md flex-col bg-white"
+              key={id}
+            >
               <div className="flex p-2 md:gap-5 cursor-pointer  flex-col-reverse md:flex-row ">
                 <div
                   className="flex flex-col md:flex-row p-2 gap-5 w-full md:min-w-[40rem]"
@@ -64,14 +67,16 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
                   }}
                 >
                   {imageUrl ? (
-                    <img
-                      src={getUrl(imageUrl)}
-                      alt={id}
-                      className="h-400 md:h-[121px] rounded-xl"
-                    />
+                    <div className="md:w-20 flex justify-center items-center">
+                      <img
+                        src={getUrl(imageUrl)}
+                        alt={id}
+                        className="h-400 md:h-[121px] rounded-xl w-full"
+                      />
+                    </div>
                   ) : (
                     <div
-                      className={`flex md:h-[121px] w-full md:w-24 h-80 rounded-xl  uppercase justify-center items-center	text-white text-4xl bg-${
+                      className={`flex md:h-[121px] w-full md:w-20 h-80 rounded-xl  uppercase justify-center items-center	text-white text-4xl bg-${
                         colorList[index % 3]
                       }`}
                     >
@@ -98,7 +103,7 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
                   />
                 </div>
               </div>
-              <div className="self-end font-thin text-xs">
+              <div className="self-end font-thin text-xs mr-2 mb-2">
                 <p> {getFormatedDate(createdAt, "DD-MM-YYYY")}</p>
               </div>
             </div>

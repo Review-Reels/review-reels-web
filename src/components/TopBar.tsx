@@ -7,7 +7,7 @@ interface Prop {
 }
 function TopBar({ hidden, setHidden }: Prop) {
   return (
-    <div className="h-12 p-2 shadow-sm  flex">
+    <div className="h-12 p-2 shadow-sm flex w-full fixed bg-white">
       <List
         size={32}
         className="hover:bg-Black7  ml-2 cursor-pointer rounded-xl"

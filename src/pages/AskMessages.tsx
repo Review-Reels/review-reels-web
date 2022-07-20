@@ -74,7 +74,7 @@ const AskMessages = () => {
 
   return (
     <Fragment>
-      <div className="bg-[linear-gradient(180.98deg, rgba(217, 217, 217, 0.1272) 0.78%, rgba(217, 217, 217, 0.072) 107.47%)] md:m-10  ">
+      <div className=" md:p-10 w-full mt-12">
         <AskMessagesList
           askMessages={askMessages}
           handleDelete={handleDelete}
@@ -118,12 +118,6 @@ const AskMessages = () => {
                   className="p-3  bg-Athens_Gray"
                 />
               </div>
-              {/* <div className="flex flex-col">
-                <label className="uppercase mb-2">
-                  questions on ask message
-                </label>
-                <textarea className="p-3  bg-Athens_Gray" />
-              </div> */}
               <div className="flex start">
                 <input
                   type="checkbox"

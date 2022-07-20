@@ -40,11 +40,11 @@ function Inbox() {
 
   return (
     <Fragment>
-      <div className="w-full overflow-hidden">
+      <div className="w-full overflow-hidden mt-12">
         <div className="w-full flex justify-center md:mx-4 my-2">
           <input
             type="text"
-            className="p-3 pl-10 bg-Athens_Gray w-full rounded-xl focus:text-gray-700  focus:border-blue-600 focus:outline-none"
+            className="mr-2 md:mr-10 p-3 pl-10 bg-Athens_Gray w-full rounded-xl focus:text-gray-700  focus:border-blue-600 focus:outline-none"
             placeholder="Search.."
           />
         </div>
@@ -94,11 +94,11 @@ function Inbox() {
                   </div>
 
                   {imageUrl && !isRead && (
-                    <div>
+                    <div className="flex justify-center content-center">
                       <img
                         src={getUrl(imageUrl)}
                         alt="response"
-                        className="w-12 rounded-lg md:ml-10"
+                        className="w-8 md:w-10 rounded-lg md:ml-10"
                       />
                     </div>
                   )}
