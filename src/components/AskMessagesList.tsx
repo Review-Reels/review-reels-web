@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Button from "../components/customComponents/Button";
 import Toast from "../components/customComponents/Toast";
 import { colorList } from "../constants/ColorList";
+import { getFormatedDate } from "../utils/Time";
 interface propType {
   askMessages: AskMessage[];
   handleDelete: (id: string) => void;
@@ -97,7 +98,9 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
                   />
                 </div>
               </div>
-              <div className="self-end font-thin text-xs">{createdAt}</div>
+              <div className="self-end font-thin text-xs">
+                <p> {getFormatedDate(createdAt, "DD-MM-YYYY")}</p>
+              </div>
             </div>
           );
         })}

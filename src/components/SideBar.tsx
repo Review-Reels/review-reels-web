@@ -36,7 +36,7 @@ function SideBar({ hidden, setHidden }: Prop) {
 
   return (
     <aside aria-label="Sidebar">
-      {hidden && (
+      {!hidden && (
         <div className="overflow-y-auto py-4 px-3 shadow-md h-screen">
           <ul className="space-y-2  my-10">
             <li>
@@ -60,8 +60,8 @@ function SideBar({ hidden, setHidden }: Prop) {
               >
                 <PaperPlaneTilt size={32} className={iconClassName} />
                 <span className={sidebarNameClass}>Inbox</span>
-                {!hidden && (
-                  <span className="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
+                {!isMobile && (
+                  <span className="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-white bg-blue-200 rounded-full dark:bg-Anakiwa ">
                     3
                   </span>
                 )}
@@ -76,8 +76,8 @@ function SideBar({ hidden, setHidden }: Prop) {
               >
                 <CirclesFour size={32} className={iconClassName} />
                 <span className={sidebarNameClass}>Review library</span>
-                {!hidden && (
-                  <span className="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                {!isMobile && (
+                  <span className="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-black bg-Peach_Orange rounded-full dark:bg-Peach_Orange dark:text-black">
                     pro
                   </span>
                 )}
