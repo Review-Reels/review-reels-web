@@ -79,8 +79,8 @@ const AskMessages = () => {
           askMessages={askMessages}
           handleDelete={handleDelete}
         />
-        <div className="relative">
-          <div className="fixed bottom-4 left-1/4 md:left-1/2 md:right-1/2 md:w-full ">
+        <div className="flex justify-center">
+          <div className="fixed bottom-4">
             <Button
               className="bg-primaryRed shadow-lg  drop-shadow-md"
               onClick={() => setOpen(true)}

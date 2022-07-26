@@ -6,6 +6,7 @@ import { getElapsedTime } from "../utils/Time";
 import Toast from "../components/customComponents/Toast";
 import { colorList } from "../constants/ColorList";
 import Modal from "../components/customComponents/Modal";
+import Loader from "../components/customComponents/Loader";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -21,9 +22,12 @@ function Inbox() {
     message: "",
     type: "success",
   });
+  const [loading, setLoading] = useState(false);
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    setLoading(true);
     getReviewResponse()
       .then((res) => {
         setReviewResponses(res.data);
@@ -34,6 +38,9 @@ function Inbox() {
           message: err.response.data.message,
           type: "failure",
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -47,6 +54,8 @@ function Inbox() {
       console.log(err);
     }
   };
+
+  if (loading) return <Loader />;
 
   return (
     <Fragment>

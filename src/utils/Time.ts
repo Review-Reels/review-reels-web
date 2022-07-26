@@ -13,17 +13,17 @@ dayjs.updateLocale("en", {
     mm: "%dm",
     h: "%dh",
     hh: "%dh",
-    d: "%dd",
+    d: "1d",
     dd: "%dd",
     M: "%dmo",
-    MM: "%dmo",
+    MM: "%ddmo",
     y: "%dy",
-    yy: "%dy",
+    yy: "%ddy",
   },
 });
 
 export const getElapsedTime = (dateTime: string) => {
-  return dayjs().to(dayjs(dateTime), true);
+  return dayjs(dateTime).fromNow(true);
 };
 
 export const getFormatedDate = (dateTime: string, format: string): string => {
