@@ -218,6 +218,7 @@ function Inbox() {
           </button>
           <div className="flex justify-center items-center bg-Athens_Gray rounded-xl px-2 w-full">
             <input
+              autoFocus
               type="text"
               className="p-3 pl-10 w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
               placeholder="Search.."
