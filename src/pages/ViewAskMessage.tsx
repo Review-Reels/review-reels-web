@@ -7,7 +7,7 @@ import Modal from "../components/customComponents/Modal";
 import Button from "../components/customComponents/Button";
 import RRCamera from "../components/customComponents/RRCamera.jsx";
 
-import { VideoCamera } from "phosphor-react";
+import { VideoCamera, Note } from "phosphor-react";
 import { createReviewResponse } from "../apis/ReviewResponseApis";
 
 import { getUrl } from "../utils/S3Utils";
@@ -84,9 +84,9 @@ function ViewAskMessage() {
         <div className="mt-4 text-center text-lg	font-semibold md:px-20 lg:px-20">
           <p>{askMessage?.askMessage}</p>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col md:w-[60%] lg:w-[70%]">
           <Button
-            className="bg-primaryRed shadow-lg  drop-shadow-md my-4 px-10 flex gap-4"
+            className="bg-primaryRed shadow-lg  drop-shadow-md my-4 flex gap-4 w-full"
             onClick={() => {
               setOpen(true);
               setIsVideo(true);
@@ -96,12 +96,13 @@ function ViewAskMessage() {
             Reply with video
           </Button>
           <Button
-            className="bg-Black5 shadow-lg  drop-shadow-md px-20"
+            className="bg-Black5 shadow-lg  drop-shadow-md gap-5 w-full"
             onClick={() => {
               setIsVideo(false);
               setOpen(true);
             }}
           >
+            <Note size={28} weight="bold" />
             Reply with text
           </Button>
         </div>

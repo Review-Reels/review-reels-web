@@ -11,7 +11,7 @@ function Button({ children, onClick, className, loading }: Props) {
       <button
         type="button"
         onClick={onClick}
-        className={`mr-2 mb-2  px-7 py-3 text-white rounded-full  text-center inline-flex items-center justify-center  ${className} ${
+        className={`mr-2 mb-2  px-7 py-3 text-white rounded-full text-center inline-flex items-center justify-center  ${className} ${
           loading ? "cursor-not-allowed" : ""
         }`}
         disabled={loading}

@@ -12,10 +12,15 @@ import { colorList } from "../constants/ColorList";
 import { getFormatedDate } from "../utils/Time";
 interface propType {
   askMessages: AskMessage[];
-  handleDelete: (id: string) => void;
+  handleDelete?: (id: string) => void;
+  handleClickItem?: (item: AskMessage) => void;
 }
 
-function AskMessagesList({ askMessages, handleDelete }: propType) {
+function AskMessagesList({
+  askMessages,
+  handleDelete,
+  handleClickItem,
+}: propType) {
   const [open, setOpen] = useState(false);
 
   const [askMessage, setAskMessage] = useState<AskMessage>();
@@ -30,7 +35,7 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
   const deleteAskMessage = async (id: string) => {
     try {
       await deleteReviewRequest(id);
-      handleDelete(id);
+      if (handleDelete) handleDelete(id);
       setShowToast({ show: true, message: "Deleted", type: "success" });
     } catch (err) {
       setShowToast({
@@ -39,6 +44,14 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
         type: "failure",
       });
       console.log(err);
+    }
+  };
+
+  const handleClick = (item: AskMessage) => {
+    if (handleClickItem) handleClickItem(item);
+    else {
+      setAskMessage(item);
+      setOpen(true);
     }
   };
   return (
@@ -50,7 +63,7 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
           placeholder="Search.."
         />
       </div>
-      <div className="max-h-[45rem] overflow-y-scroll md:h-auto">
+      <div className="max-h-[45rem] overflow-y-auto md:h-auto">
         {askMessages.map((item, index) => {
           const { askMessage, createdAt, imageUrl, id, name } = item;
           return (
@@ -61,10 +74,7 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
               <div className="flex p-2 md:gap-5 cursor-pointer  flex-col-reverse md:flex-row ">
                 <div
                   className="flex flex-col md:flex-row p-2 gap-5 w-full md:min-w-[40rem]"
-                  onClick={() => {
-                    setAskMessage(item);
-                    setOpen(true);
-                  }}
+                  onClick={() => handleClick(item)}
                 >
                   {imageUrl ? (
                     <div className="md:w-20 flex justify-center items-center">
@@ -90,18 +100,20 @@ function AskMessagesList({ askMessages, handleDelete }: propType) {
                     </p>
                   </div>
                 </div>
-                <div className="cursor-pointer flex gap-2 justify-end px-2 py-4">
-                  <PencilSimple
-                    size={28}
-                    onClick={() => console.log("jhgh")}
-                    weight="bold"
-                  />
-                  <TrashSimple
-                    weight="bold"
-                    size={28}
-                    onClick={() => deleteAskMessage(id)}
-                  />
-                </div>
+                {!handleClickItem && (
+                  <div className="cursor-pointer flex gap-2 justify-end px-2 py-4">
+                    <PencilSimple
+                      size={28}
+                      onClick={() => console.log("jhgh")}
+                      weight="bold"
+                    />
+                    <TrashSimple
+                      weight="bold"
+                      size={28}
+                      onClick={() => deleteAskMessage(id)}
+                    />
+                  </div>
+                )}
               </div>
               <div className="self-end font-thin text-xs mr-2 mb-2">
                 <p> {getFormatedDate(createdAt, "DD-MM-YYYY")}</p>
