@@ -20,6 +20,8 @@ import AskMessagesList from "../components/AskMessagesList";
 import { MagnifyingGlass } from "phosphor-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { debounce } from "ts-debounce";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -239,25 +241,57 @@ function Inbox() {
           toastMessage={showToast.message}
           type={showToast.type}
         />
-        <Modal open={open} handleClose={setOpen}>
+        <Modal
+          open={open}
+          handleClose={setOpen}
+          title={
+            <div className="flex justify-center items-center">
+              <div
+                className={`flex rounded-full w-12 h-12 md:w-16 md:h-16 justify-center items-center bg-${colorList[2]}`}
+              >
+                <p className="text-l md:text-3xl text-white uppercase">
+                  {reviewResponse?.customerName.charAt(0)}
+                </p>
+              </div>
+              <div className="flex flex-col ml-2 w-full">
+                <h3 className="text-xl font-semibold	">
+                  {reviewResponse?.customerName}
+                </h3>
+                <h5 className="text-base">{reviewResponse?.whatYouDo}</h5>
+              </div>
+            </div>
+          }
+        >
           <div>
+            <div>
+              <span className="text-Black2 font-semibold">
+                {" "}
+                Embed review to your website
+              </span>
+              <SyntaxHighlighter
+                language="javascript"
+                style={atomDark}
+                wrapLongLines
+              >
+                {
+                  '<script type="text/javascript" src="https://testimonial.to/js/iframeResizer.min.js"></script> <iframe  src="http://localhost:3001/view/53be899c-c309-4ec0-b13a-ece5b1c92715" frameborder="0" scrolling="no" width="100%" height="100%"></iframe><script type="text/javascript">iFrameResize({log: false, checkOrigin: false}, "#testimonialto-wall-of-love-for-testimonial-light");</script>'
+                }
+              </SyntaxHighlighter>
+            </div>
             {reviewResponse?.videoUrl ? (
-              <div className="relative flex justify-center items-center cursor-pointer">
+              <div className="relative flex justify-center items-center cursor-pointer  p-4">
                 <video
-                  className=" md:w-1/2 lg:w-1/2"
+                  className=" md:w-1/2 lg:w-1/2 rounded-xl shadow-lg"
                   src={getUrl(reviewResponse?.videoUrl)}
                   ref={videoRef}
                   controls
                 ></video>
               </div>
             ) : (
-              <div className="mt-4 text-center text-lg	font-base	">
+              <div className="mt-4 text-center text-lg	font-base	bg-Black1 text-black  font-semibold rounded-xl p-4">
                 <p>{reviewResponse?.replyMessage}</p>
               </div>
             )}
-            <div className="mt-4 text-center text-lg	font-semibold	">
-              <p>{reviewResponse?.customerName}</p>
-            </div>
           </div>
         </Modal>
         <Modal open={openAskMessageList} handleClose={setOpenAskMessageList}>
