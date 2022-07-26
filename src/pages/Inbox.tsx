@@ -1,4 +1,12 @@
-import React, { Fragment, useEffect, useState, useRef, useMemo } from "react";
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  ChangeEvent,
+} from "react";
 import { getReviewResponse, updateIsRead } from "../apis/ReviewResponseApis";
 import { getReviewRequest } from "../apis/AskMessageApis";
 import { ReviewResponse, AskMessage } from "../types";
@@ -10,6 +18,8 @@ import Modal from "../components/customComponents/Modal";
 import Loader from "../components/customComponents/Loader";
 import AskMessagesList from "../components/AskMessagesList";
 import { MagnifyingGlass } from "phosphor-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { debounce } from "ts-debounce";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -29,8 +39,46 @@ function Inbox() {
     type: "success",
   });
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  let { requestId } = useParams();
+  let navigate = useNavigate();
+
+  // eslint-disable-next-line
+  const debouncedSearch = useCallback(
+    debounce(
+      (searchValue: string, requestId: string) =>
+        searchReviewResponse(searchValue, requestId),
+      1000
+    ),
+    []
+  );
+
+  const searchReviewResponse = (searchValue: string, requestId: string) => {
+    setLoading(true);
+    const id = requestId ? requestId : "";
+    getReviewResponse(id, searchValue)
+      .then((res) => {
+        setReviewResponses(res.data);
+      })
+      .catch((err) => {
+        setShowToast({
+          show: true,
+          message: err.response.data.message,
+          type: "failure",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+    const id = requestId ? requestId : "";
+    debouncedSearch(event.target.value, id);
+  };
 
   useEffect(() => {
     getReviewRequest()
@@ -48,7 +96,8 @@ function Inbox() {
 
   useEffect(() => {
     setLoading(true);
-    getReviewResponse()
+    const id = requestId ? requestId : "";
+    getReviewResponse(id, "")
       .then((res) => {
         setReviewResponses(res.data);
       })
@@ -62,7 +111,7 @@ function Inbox() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [requestId]);
 
   const handleOpen = async (response: ReviewResponse) => {
     setReviewResponse(response);
@@ -73,6 +122,12 @@ function Inbox() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleClickItem = (askMessage: AskMessage) => {
+    navigate(`/inbox/${askMessage.id}`);
+    setSelectedAskMessage(askMessage);
+    setOpenAskMessageList(false);
   };
 
   const listView = useMemo(
@@ -166,6 +221,8 @@ function Inbox() {
               type="text"
               className="p-3 pl-10 w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
               placeholder="Search.."
+              value={search}
+              onChange={handleSearch}
             ></input>
             <MagnifyingGlass size={24} weight="bold" />
           </div>
@@ -205,10 +262,7 @@ function Inbox() {
         <Modal open={openAskMessageList} handleClose={setOpenAskMessageList}>
           <AskMessagesList
             askMessages={askMessages}
-            handleClickItem={(askMessage) => {
-              setSelectedAskMessage(askMessage);
-              setOpenAskMessageList(false);
-            }}
+            handleClickItem={handleClickItem}
           />
         </Modal>
       </div>

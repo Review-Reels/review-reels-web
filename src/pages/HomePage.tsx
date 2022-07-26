@@ -13,9 +13,9 @@ const HomePage = () => {
     else setHidden(false);
   }, [isMobile]);
   return (
-    <div className="flex overflow-hidden flex-col">
+    <div className="flex flex-col">
       <TopBar hidden={hidden} setHidden={setHidden} />
-      <div className="flex overflow-hidden">
+      <div className="flex">
         <SideBar hidden={hidden} setHidden={setHidden} />
         <Outlet />
       </div>

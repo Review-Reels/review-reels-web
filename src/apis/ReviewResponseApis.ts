@@ -2,8 +2,13 @@ import { UpdateIsRead } from "../types";
 
 import axios from "./axios";
 
-export const getReviewResponse = async () => {
-  return axios.get(`review/reviewResponse`);
+export const getReviewResponse = async (
+  requestId: string,
+  searchValue?: string
+) => {
+  return axios.get(
+    `review/reviewResponse?requestId=${requestId}&searchValue=${searchValue}`
+  );
 };
 
 export const getReviewResponseWithId = async (requestId: string) => {

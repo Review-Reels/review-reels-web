@@ -31,6 +31,7 @@ function AllRoutes() {
               <Route path="askmessage" element={<AskMessages />} />
               <Route path="reviewlibrary" element={<ReviewLibrary />} />
               <Route path="inbox" element={<Inbox />} />
+              <Route path="inbox/:requestId" element={<Inbox />} />
               <Route path="integrations" element={<Integrations />} />
               <Route path="pricing" element={<Pricing />} />
               <Route path="settings" element={<Settings />} />

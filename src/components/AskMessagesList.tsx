@@ -102,16 +102,18 @@ function AskMessagesList({
                 </div>
                 {!handleClickItem && (
                   <div className="cursor-pointer flex gap-2 justify-end px-2 py-4">
-                    <PencilSimple
-                      size={28}
+                    <div
+                      className="flex rounded-full bg-Black6 h-10 w-10 justify-center items-center"
                       onClick={() => console.log("jhgh")}
-                      weight="bold"
-                    />
-                    <TrashSimple
-                      weight="bold"
-                      size={28}
+                    >
+                      <PencilSimple size={28} />
+                    </div>
+                    <div
+                      className="flex rounded-full bg-Black6 h-10 w-10 justify-center items-center"
                       onClick={() => deleteAskMessage(id)}
-                    />
+                    >
+                      <TrashSimple size={28} />
+                    </div>
                   </div>
                 )}
               </div>
