@@ -245,7 +245,7 @@ function Inbox() {
           open={open}
           handleClose={setOpen}
           title={
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center gap-2">
               <div
                 className={`flex rounded-full w-12 h-12 md:w-16 md:h-16 justify-center items-center bg-${colorList[2]}`}
               >
@@ -253,7 +253,7 @@ function Inbox() {
                   {reviewResponse?.customerName.charAt(0)}
                 </p>
               </div>
-              <div className="flex flex-col ml-2 w-full">
+              <div className="flex flex-col w-full">
                 <h3 className="text-xl font-semibold	">
                   {reviewResponse?.customerName}
                 </h3>
@@ -265,13 +265,13 @@ function Inbox() {
           <div>
             <div>
               <span className="text-Black2 font-semibold">
-                {" "}
                 Embed review to your website
               </span>
               <SyntaxHighlighter
                 language="javascript"
                 style={atomDark}
                 wrapLongLines
+                className="select-all	"
               >
                 {
                   '<script type="text/javascript" src="https://testimonial.to/js/iframeResizer.min.js"></script> <iframe  src="http://localhost:3001/view/53be899c-c309-4ec0-b13a-ece5b1c92715" frameborder="0" scrolling="no" width="100%" height="100%"></iframe><script type="text/javascript">iFrameResize({log: false, checkOrigin: false}, "#testimonialto-wall-of-love-for-testimonial-light");</script>'
