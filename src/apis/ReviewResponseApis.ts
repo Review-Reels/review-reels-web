@@ -11,6 +11,10 @@ export const getReviewResponse = async (
   );
 };
 
+export const getEmbedReviewResponse = async (responseId: string) => {
+  return axios.get(`review/embedReviewResponse?responseId=${responseId}`);
+};
+
 export const getReviewResponseWithId = async (requestId: string) => {
   return axios.get(`review/reviewResponse/requestId=${requestId}`);
 };

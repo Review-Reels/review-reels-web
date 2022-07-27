@@ -15,6 +15,7 @@ import Inbox from "./pages/Inbox";
 import NotFound from "./pages/NotFound";
 import ViewAskMessage from "./pages/ViewAskMessage";
 import ThankYou from "./pages/ThankYou";
+import VideoEmbed from "./pages/VideoEmbed";
 
 function AllRoutes() {
   return (
@@ -26,6 +27,7 @@ function AllRoutes() {
           <Route path="email" element={<EmailSignIn />} />
           <Route path="view/:requestId" element={<ViewAskMessage />} />
           <Route path="thankyou" element={<ThankYou />} />
+          <Route path="embed/:responseId" element={<VideoEmbed />} />
           <Route element={<LoggedInRoutes />}>
             <Route path="/" element={<HomePage />}>
               <Route path="askmessage" element={<AskMessages />} />

@@ -10,7 +10,7 @@ import React, {
 import { getReviewResponse, updateIsRead } from "../apis/ReviewResponseApis";
 import { getReviewRequest } from "../apis/AskMessageApis";
 import { ReviewResponse, AskMessage } from "../types";
-import { getUrl } from "../utils/S3Utils";
+import { getUrl, getWebUrl } from "../utils/S3Utils";
 import { getElapsedTime } from "../utils/Time";
 import Toast from "../components/customComponents/Toast";
 import { colorList } from "../constants/ColorList";
@@ -151,19 +151,19 @@ function Inbox() {
           >
             <div className="flex justify-center items-center gap-1">
               <div
-                className={`flex rounded-full w-12 h-12 md:w-16 md:h-16 justify-center items-center bg-${
+                className={`flex rounded-full w-12 h-12 md:w-14 md:h-14 justify-center items-center bg-${
                   colorList[index % 3]
                 }`}
               >
-                <p className="text-l md:text-3xl text-white uppercase">
+                <p className="text-l md:text-xl text-white uppercase">
                   {customerName.charAt(0)}
                 </p>
               </div>
-              <div className="flex flex-col justify-center m-4">
+              <div className="flex flex-col justify-center m-4 tracking-wider">
                 <h3
                   className={`${
                     isRead ? "text-Black2" : "text-black"
-                  } font-bold	text-xl`}
+                  } font-bold	text-[19px]`}
                 >
                   {customerName}
                 </h3>
@@ -171,7 +171,7 @@ function Inbox() {
                   <h6
                     className={`${
                       isRead ? "text-Black2" : "text-black"
-                    } text-lg`}
+                    } text-[17px]`}
                   >
                     {requestMessageId
                       ? imageUrl
@@ -218,11 +218,11 @@ function Inbox() {
             <span className="text-Black3">Select ask message: </span>
             {selectedAsKMessage?.name}
           </button>
-          <div className="flex justify-center items-center bg-Athens_Gray rounded-xl px-2 w-full">
+          <div className="flex justify-center items-center bg-Athens_Gray rounded-xl px-4 w-full">
             <input
               autoFocus
               type="text"
-              className="p-3 pl-10 w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
+              className="p-3  w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
               placeholder="Search.."
               value={search}
               onChange={handleSearch}
@@ -263,21 +263,6 @@ function Inbox() {
           }
         >
           <div>
-            <div>
-              <span className="text-Black2 font-semibold">
-                Embed review to your website
-              </span>
-              <SyntaxHighlighter
-                language="javascript"
-                style={atomDark}
-                wrapLongLines
-                className="select-all	"
-              >
-                {
-                  '<script type="text/javascript" src="https://testimonial.to/js/iframeResizer.min.js"></script> <iframe  src="http://localhost:3001/view/53be899c-c309-4ec0-b13a-ece5b1c92715" frameborder="0" scrolling="no" width="100%" height="100%"></iframe><script type="text/javascript">iFrameResize({log: false, checkOrigin: false}, "#testimonialto-wall-of-love-for-testimonial-light");</script>'
-                }
-              </SyntaxHighlighter>
-            </div>
             {reviewResponse?.videoUrl ? (
               <div className="relative flex justify-center items-center cursor-pointer  p-4">
                 <video
@@ -292,6 +277,21 @@ function Inbox() {
                 <p>{reviewResponse?.replyMessage}</p>
               </div>
             )}
+            <div>
+              <span className="text-Black2 font-semibold">
+                Embed review to your website
+              </span>
+              <SyntaxHighlighter
+                language="javascript"
+                style={atomDark}
+                wrapLongLines
+                // className="select-all	"
+              >
+                {`<iframe src="${getWebUrl(
+                  "/embed/" + reviewResponse?.id
+                )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`}
+              </SyntaxHighlighter>
+            </div>
           </div>
         </Modal>
         <Modal open={openAskMessageList} handleClose={setOpenAskMessageList}>
