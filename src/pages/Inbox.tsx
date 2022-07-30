@@ -288,7 +288,7 @@ function Inbox() {
                 // className="select-all	"
               >
                 {`<iframe src="${getWebUrl(
-                  "/embed/" + reviewResponse?.id
+                  "embed/" + reviewResponse?.id
                 )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`}
               </SyntaxHighlighter>
             </div>

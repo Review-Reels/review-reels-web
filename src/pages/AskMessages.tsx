@@ -5,6 +5,7 @@ import Toast from "../components/customComponents/Toast";
 import Modal from "../components/customComponents/Modal";
 import Button from "../components/customComponents/Button";
 import RRCamera from "../components/customComponents/RRCamera.jsx";
+import RRFileLoader from "../components/customComponents/RRFileLoader";
 
 import { getReviewRequest, createReviewRequest } from "../apis/AskMessageApis";
 import { AskMessage as AskMessageType } from "../types";
@@ -128,8 +129,15 @@ const AskMessages = () => {
                 <label className="uppercase mx-2">include video</label>
               </div>
               {isVideo && (
-                <div>
+                <div className="flex justify-center flex-col items-center">
                   <RRCamera
+                    onVideoRecorded={(recordedVideo: string, type: string) => {
+                      setRecordedVideo(recordedVideo);
+                      setVideoType(type);
+                    }}
+                  />
+                  <div className="py-5 hidden md:flex lg:flex">OR</div>
+                  <RRFileLoader
                     onVideoRecorded={(recordedVideo: string, type: string) => {
                       setRecordedVideo(recordedVideo);
                       setVideoType(type);

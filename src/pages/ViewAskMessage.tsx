@@ -5,6 +5,7 @@ import { AskMessage } from "../types";
 import Modal from "../components/customComponents/Modal";
 import ViewMessageComponent from "../components/ViewMessageComponent";
 import RRCamera from "../components/customComponents/RRCamera.jsx";
+import RRFileLoader from "../components/customComponents/RRFileLoader";
 import { createReviewResponse } from "../apis/ReviewResponseApis";
 import { useNavigate } from "react-router-dom";
 
@@ -104,8 +105,15 @@ function ViewAskMessage() {
             </ul>
           </div>
           {isVideo ? (
-            <div>
+            <div className="flex justify-center flex-col items-center">
               <RRCamera
+                onVideoRecorded={(recordedVideo: string, type: string) => {
+                  setRecordedVideo(recordedVideo);
+                  setVideoType(type);
+                }}
+              />
+              <div className="py-5 hidden md:flex lg:flex">OR</div>
+              <RRFileLoader
                 onVideoRecorded={(recordedVideo: string, type: string) => {
                   setRecordedVideo(recordedVideo);
                   setVideoType(type);
