@@ -1,15 +1,22 @@
-import React, { useState, useRef } from "react";
-import { PencilSimple, TrashSimple, Copy, Export } from "phosphor-react";
+import React, { useState } from "react";
+import {
+  PencilSimple,
+  TrashSimple,
+  Export,
+  Link as LinkIcon,
+} from "phosphor-react";
 import { AskMessage } from "../types";
 import { getUrl, getWebUrl } from "../utils/S3Utils";
 import { deleteReviewRequest } from "../apis/AskMessageApis";
 import Modal from "../components/customComponents/Modal";
+import ViewMessageComponent from "../components/ViewMessageComponent";
 
 import { Link } from "react-router-dom";
 import Button from "../components/customComponents/Button";
 import Toast from "../components/customComponents/Toast";
 import { colorList } from "../constants/ColorList";
 import { getFormatedDate } from "../utils/Time";
+
 interface propType {
   askMessages: AskMessage[];
   handleDelete?: (id: string) => void;
@@ -24,7 +31,6 @@ function AskMessagesList({
   const [open, setOpen] = useState(false);
 
   const [askMessage, setAskMessage] = useState<AskMessage>();
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
   const [showToast, setShowToast] = useState({
     show: false,
@@ -52,6 +58,7 @@ function AskMessagesList({
     else {
       setAskMessage(item);
       setOpen(true);
+      setCopied(false);
     }
   };
   return (
@@ -132,18 +139,24 @@ function AskMessagesList({
         <div>
           <div className="bg-Anakiwa mb-6 p-4 rounded-lg flex flex-col gap-2">
             <h2 className="uppercase font-medium">share using link</h2>
-            <Link to={`/view/${askMessage?.id}`} className="text-clip">
-              <h1 className="text-xl">{getWebUrl(`view/${askMessage?.id}`)}</h1>
+            <Link
+              to={`/view/${askMessage?.id}`}
+              className="flex gap-2 items-center"
+            >
+              <LinkIcon size={22} weight="bold" />
+              <h1 className="text-xl text-Black underline text-clip">
+                {getWebUrl(`view/${askMessage?.id}`)}
+              </h1>
             </Link>
             <p className="text-Black2">
               Your ask message is available on the above link, share with
               customers to get reviews.
             </p>
             <div className="flex flex-col md:flex-row">
-              <Button className="bg-Black4">
+              {/* <Button className="bg-Black4">
                 <Copy size={32} className="mr-2" />
                 Share
-              </Button>
+              </Button> */}
               <Button
                 className="bg-Black4"
                 onClick={() => {
@@ -153,12 +166,12 @@ function AskMessagesList({
                   setCopied(true);
                 }}
               >
-                <Export size={32} className="mr-2" />
+                <Export size={24} className="mr-2" />
                 {copied ? "Copied!" : "Copy Link"}
               </Button>
             </div>
           </div>
-          <div className="bg-Sweet_Pink mb-6 p-4 rounded-lg flex flex-col gap-2">
+          {/* <div className="bg-Sweet_Pink mb-6 p-4 rounded-lg flex flex-col gap-2">
             <h2 className="uppercase font-medium">share using emails</h2>
             <p className="text-Black2">
               Send emails to your contact list with the ask message and let them
@@ -170,19 +183,14 @@ function AskMessagesList({
                 Send Emails
               </Button>
             </div>
+          </div> */}
+          <div className="flex justify-center items-center cursor-pointer m-2">
+            <h3 className="text-xl text-Charade font-medium	italic text-center">
+              This is how your ask message will be shown to users
+            </h3>
           </div>
-          {askMessage?.videoUrl && (
-            <div className="relative flex justify-center items-center cursor-pointer">
-              <video
-                className=" md:w-1/2 lg:w-1/2"
-                src={getUrl(askMessage?.videoUrl)}
-                ref={videoRef}
-                controls
-              ></video>
-            </div>
-          )}
-          <div className="mt-4 text-center text-lg	font-semibold	">
-            <p>{askMessage?.askMessage}</p>
+          <div className=" flex justify-center items-center cursor-pointer">
+            <ViewMessageComponent askMessage={askMessage} />
           </div>
         </div>
       </Modal>
