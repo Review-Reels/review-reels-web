@@ -16,8 +16,9 @@ function ViewMessageComponent({
   onReplyWithVideoClick,
   onReplyWithTextClick,
 }: PropType) {
+  // md:shadow-lg md:shadow-slate-200 lg:shadow-lg lg:shadow-slate-200
   return (
-    <div className="flex justify-center items-center flex-col md:w-[30rem] md:shadow-lg md:shadow-slate-200 lg:shadow-lg lg:shadow-slate-200 rounded-xl">
+    <div className="flex justify-center items-center flex-col md:w-[30rem] rounded-xl md:border-2 py-4">
       <div className="relative flex justify-center items-center cursor-pointer  md:w-[20rem]">
         {askMessage?.videoUrl && (
           <video
@@ -27,7 +28,7 @@ function ViewMessageComponent({
           ></video>
         )}
       </div>
-      <div className="mt-4 text-center text-lg	font-semibold md:px-20 lg:px-20">
+      <div className="mt-4 text-center text-lg md:px-20 lg:px-20 text-Charade font-medium">
         <p>{askMessage?.askMessage}</p>
       </div>
       <div className="flex flex-col md:w-[60%] lg:w-[70%]">

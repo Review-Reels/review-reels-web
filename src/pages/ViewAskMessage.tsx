@@ -65,7 +65,7 @@ function ViewAskMessage() {
   };
 
   return (
-    <div className="flex justify-center items-center m-10 md:m-0 h-screen">
+    <div className="flex justify-center items-center m-10 md:m-2">
       <ViewMessageComponent
         askMessage={askMessage}
         onReplyWithVideoClick={() => {

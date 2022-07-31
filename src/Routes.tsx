@@ -30,6 +30,7 @@ function AllRoutes() {
           <Route path="embed/:responseId" element={<VideoEmbed />} />
           <Route element={<LoggedInRoutes />}>
             <Route path="/" element={<HomePage />}>
+              <Route path="/" element={<AskMessages />} />
               <Route path="askmessage" element={<AskMessages />} />
               <Route path="reviewlibrary" element={<ReviewLibrary />} />
               <Route path="inbox" element={<Inbox />} />

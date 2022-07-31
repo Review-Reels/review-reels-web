@@ -22,6 +22,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { debounce } from "ts-debounce";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import EmbedComponent from "../components/EmbedComponent";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -43,7 +44,6 @@ function Inbox() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
-  const videoRef = useRef<HTMLVideoElement>(null);
   let { requestId } = useParams();
   let navigate = useNavigate();
 
@@ -241,42 +241,8 @@ function Inbox() {
           toastMessage={showToast.message}
           type={showToast.type}
         />
-        <Modal
-          open={open}
-          handleClose={setOpen}
-          title={
-            <div className="flex justify-center items-center gap-2">
-              <div
-                className={`flex rounded-full w-12 h-12 md:w-16 md:h-16 justify-center items-center bg-${colorList[2]}`}
-              >
-                <p className="text-l md:text-3xl text-white uppercase">
-                  {reviewResponse?.customerName.charAt(0)}
-                </p>
-              </div>
-              <div className="flex flex-col w-full">
-                <h3 className="text-xl font-semibold	">
-                  {reviewResponse?.customerName}
-                </h3>
-                <h5 className="text-base">{reviewResponse?.whatYouDo}</h5>
-              </div>
-            </div>
-          }
-        >
+        <Modal open={open} handleClose={setOpen}>
           <div>
-            {reviewResponse?.videoUrl ? (
-              <div className="relative flex justify-center items-center cursor-pointer  p-4">
-                <video
-                  className=" md:w-1/2 lg:w-1/2 rounded-xl shadow-lg"
-                  src={getUrl(reviewResponse?.videoUrl)}
-                  ref={videoRef}
-                  controls
-                ></video>
-              </div>
-            ) : (
-              <div className="mt-4 text-center text-lg	font-base	bg-Black1 text-black  font-semibold rounded-xl p-4">
-                <p>{reviewResponse?.replyMessage}</p>
-              </div>
-            )}
             <div>
               <span className="text-Black2 font-semibold">
                 Embed review to your website
@@ -292,6 +258,9 @@ function Inbox() {
                 )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`}
               </SyntaxHighlighter>
             </div>
+            {reviewResponse && (
+              <EmbedComponent reviewResponse={reviewResponse} />
+            )}
           </div>
         </Modal>
         <Modal open={openAskMessageList} handleClose={setOpenAskMessageList}>
