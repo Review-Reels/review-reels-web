@@ -4,8 +4,9 @@ import { Check } from "phosphor-react";
 const PRICING_CONSTANT = {
   starter: {
     name: "Starter",
-    priceText: "$25",
-    price: 25.0,
+    priceText: "Free",
+    interval: "",
+    price: 0.0,
     features: [
       "1 Review Ask message ",
       "4 Video Testmonials ",
@@ -20,6 +21,7 @@ const PRICING_CONSTANT = {
   gold: {
     name: "Gold (Recomended)",
     priceText: "$25",
+    interval: "/Mo",
     price: 25.0,
     features: [
       "Unlimitted Review Ask message ",
@@ -50,7 +52,7 @@ function Pricing() {
               <h2 className="text-xl font-bold">{pricing.name}</h2>
               <h1 className="text-5xl font-semibold">
                 {pricing.priceText}
-                <span className="text-lg text-Black2">/MO</span>
+                <span className="text-lg text-Black2"> {pricing.interval}</span>
               </h1>
               <ul className="list-none">
                 {pricing.features.map((feature) => (

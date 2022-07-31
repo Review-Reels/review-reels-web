@@ -69,25 +69,35 @@ function SideBar({ hidden, setHidden }: Prop) {
             </li>
             <li>
               <NavLink
-                to="/reviewlibrary"
+                // to="/reviewlibrary"
+                to="/comingSoon"
                 className={({ isActive }) =>
-                  isActive ? activeClassName : normalClassName
+                  isActive
+                    ? activeClassName + " cursor-not-allowed"
+                    : normalClassName + " cursor-not-allowed"
                 }
               >
                 <CirclesFour size={32} className={iconClassName} />
                 <span className={sidebarNameClass}>Review library</span>
-                {!isMobile && (
+                {/* {!isMobile && (
                   <span className="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-black bg-Peach_Orange rounded-full dark:bg-Peach_Orange dark:text-black">
                     pro
                   </span>
-                )}
+                )} */}
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/integrations"
+                // to="/integrations"
+
+                // className={({ isActive }) =>
+                //   isActive ? activeClassName : normalClassName
+                // }
+                to="/comingSoon"
                 className={({ isActive }) =>
-                  isActive ? activeClassName : normalClassName
+                  isActive
+                    ? activeClassName + " cursor-not-allowed"
+                    : normalClassName + " cursor-not-allowed"
                 }
               >
                 <Plug size={32} className={iconClassName} />
@@ -118,9 +128,15 @@ function SideBar({ hidden, setHidden }: Prop) {
             </li>
             <li>
               <NavLink
-                to="/help"
+                // to="/help"
+                // className={({ isActive }) =>
+                //   isActive ? activeClassName : normalClassName
+                // }
+                to="/comingSoon"
                 className={({ isActive }) =>
-                  isActive ? activeClassName : normalClassName
+                  isActive
+                    ? activeClassName + " cursor-not-allowed"
+                    : normalClassName + " cursor-not-allowed"
                 }
               >
                 <Lifebuoy size={32} className={iconClassName} />

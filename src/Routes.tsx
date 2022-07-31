@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import ViewAskMessage from "./pages/ViewAskMessage";
 import ThankYou from "./pages/ThankYou";
 import VideoEmbed from "./pages/VideoEmbed";
+import ComingSoon from "./pages/ComingSoon";
 
 function AllRoutes() {
   return (
@@ -39,6 +40,7 @@ function AllRoutes() {
               <Route path="pricing" element={<Pricing />} />
               <Route path="settings" element={<Settings />} />
               <Route path="help" element={<Help />} />
+              <Route path="comingsoon" element={<ComingSoon />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
