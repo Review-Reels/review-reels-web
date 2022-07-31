@@ -2,12 +2,15 @@ import React, {
   Fragment,
   useEffect,
   useState,
-  useRef,
   useMemo,
   useCallback,
   ChangeEvent,
 } from "react";
-import { getReviewResponse, updateIsRead } from "../apis/ReviewResponseApis";
+import {
+  getReviewResponse,
+  updateIsRead,
+  getUnReadStatistics,
+} from "../apis/ReviewResponseApis";
 import { getReviewRequest } from "../apis/AskMessageApis";
 import { ReviewResponse, AskMessage } from "../types";
 import { getUrl, getWebUrl } from "../utils/S3Utils";
@@ -17,12 +20,14 @@ import { colorList } from "../constants/ColorList";
 import Modal from "../components/customComponents/Modal";
 import Loader from "../components/customComponents/Loader";
 import AskMessagesList from "../components/AskMessagesList";
-import { MagnifyingGlass } from "phosphor-react";
+import { MagnifyingGlass, ArrowsClockwise, Backspace } from "phosphor-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { debounce } from "ts-debounce";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import EmbedComponent from "../components/EmbedComponent";
+import { Tooltip } from "../components/customComponents/ToolTip";
+import { useUnReadStore } from "../store/UnReadStore";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -32,7 +37,8 @@ function Inbox() {
     null
   );
   const [askMessages, setAskMessages] = useState<AskMessage[] | []>([]);
-  const [selectedAsKMessage, setSelectedAskMessage] = useState<AskMessage>();
+  const [selectedAsKMessage, setSelectedAskMessage] =
+    useState<AskMessage | null>(null);
   const [open, setOpen] = useState(false);
   const [openAskMessageList, setOpenAskMessageList] = useState(false);
 
@@ -43,6 +49,7 @@ function Inbox() {
   });
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const setUnRead = useUnReadStore((state) => state.setUnRead);
 
   let { requestId } = useParams();
   let navigate = useNavigate();
@@ -82,6 +89,15 @@ function Inbox() {
     debouncedSearch(event.target.value, id);
   };
 
+  const getUnReadStatisticsApi = async () => {
+    try {
+      const res = await getUnReadStatistics();
+      setUnRead(res.data.unReadCount);
+    } catch (err) {
+      console.log("unread error");
+    }
+  };
+
   useEffect(() => {
     getReviewRequest()
       .then((res) => {
@@ -119,8 +135,15 @@ function Inbox() {
     setReviewResponse(response);
     setOpen(true);
     try {
-      if (response && !response.isRead)
+      if (response && !response.isRead) {
         await updateIsRead({ isRead: true }, response.id);
+        await getUnReadStatisticsApi();
+        const updatedResponse = reviewResponses.map((item) => {
+          if (item.id === response.id) return { ...item, isRead: true };
+          else return item;
+        });
+        setReviewResponses(updatedResponse);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -202,23 +225,50 @@ function Inbox() {
           </div>
         );
       }),
+    // eslint-disable-next-line
     [reviewResponses]
   );
-
-  if (loading) return <Loader />;
 
   return (
     <Fragment>
       <div className="w-full overflow-hidden mt-12">
-        <div className="w-full flex flex-col md:flex-row justify-center md:mx-4 my-2 px-5 gap-2">
-          <button
-            className="bg-Athens_Gray  rounded-xl w-full border-[1px]	 text-Black2 py-2"
-            onClick={() => setOpenAskMessageList(true)}
-          >
-            <span className="text-Black3">Select ask message: </span>
-            {selectedAsKMessage?.name}
-          </button>
-          <div className="flex justify-center items-center bg-Athens_Gray rounded-xl px-4 w-full">
+        <div className="w-full flex flex-col md:flex-row justify-center items-center md:mx-4 my-2 px-5">
+          <div className="w-full flex flex-row justify-center items-center">
+            <Tooltip message="Refresh">
+              <div className="p-2">
+                <ArrowsClockwise
+                  size={32}
+                  weight="bold"
+                  className="hover:animate-spin	cursor-pointer"
+                  onClick={() =>
+                    searchReviewResponse(
+                      search,
+                      selectedAsKMessage ? selectedAsKMessage.id : ""
+                    )
+                  }
+                />
+              </div>
+            </Tooltip>
+            <button
+              className="bg-Athens_Gray  rounded-l-xl w-full border-[1px]	 text-Black2 py-2"
+              onClick={() => setOpenAskMessageList(true)}
+            >
+              <span className="text-Black3">Select ask message: </span>
+              {selectedAsKMessage?.name}
+            </button>
+            <Tooltip message="Clear ask message">
+              <div
+                className="bg-Athens_Gray  rounded-r-xl  border-[1px]	 text-Black2 py-1 cursor-pointer"
+                onClick={() => {
+                  navigate(`/inbox`);
+                  setSelectedAskMessage(null);
+                }}
+              >
+                <Backspace size={32} weight="fill" />
+              </div>
+            </Tooltip>
+          </div>
+          <div className="flex justify-center items-center bg-Athens_Gray rounded-xl px-4 w-full mx-2">
             <input
               autoFocus
               type="text"
@@ -230,9 +280,14 @@ function Inbox() {
             <MagnifyingGlass size={24} weight="bold" />
           </div>
         </div>
-        <div className="max-h-[35rem] md:max-h-[45rem] overflow-y-auto md:h-auto m-2 md:m-10 lg:m-10">
-          {listView}
-        </div>
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="max-h-[35rem] md:max-h-[45rem] overflow-y-auto md:h-auto m-2 md:m-10 lg:m-10">
+            {listView}
+          </div>
+        )}
+
         <Toast
           showToast={showToast.show}
           onClose={(value) =>

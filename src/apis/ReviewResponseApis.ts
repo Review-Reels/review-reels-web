@@ -15,6 +15,10 @@ export const getEmbedReviewResponse = async (responseId: string) => {
   return axios.get(`review/embedReviewResponse?responseId=${responseId}`);
 };
 
+export const getUnReadStatistics = async () => {
+  return axios.get(`review/unReadStatistics`);
+};
+
 export const getReviewResponseWithId = async (requestId: string) => {
   return axios.get(`review/reviewResponse/requestId=${requestId}`);
 };

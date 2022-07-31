@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   ChatTeardropDots,
@@ -13,6 +13,8 @@ import {
 import { NavLink } from "react-router-dom";
 import useCheckMobileScreen from "../hooks/checkMobileDevice";
 import { useStore } from "../store/UserStore";
+import { useUnReadStore } from "../store/UnReadStore";
+import { getUnReadStatistics } from "../apis/ReviewResponseApis";
 interface Prop {
   hidden: boolean;
   setHidden: (val: boolean) => void;
@@ -20,6 +22,18 @@ interface Prop {
 function SideBar({ hidden, setHidden }: Prop) {
   const isMobile = useCheckMobileScreen();
   const resetUser = useStore((state) => state.resetUser);
+  const unReadCount = useUnReadStore((state) => state.unRead);
+  const setUnRead = useUnReadStore((state) => state.setUnRead);
+
+  useEffect(() => {
+    getUnReadStatistics()
+      .then((res) => {
+        setUnRead(res.data.unReadCount);
+      })
+      .catch((err) => {
+        console.log(err, "Err");
+      });
+  });
 
   const signOut = () => {
     resetUser();
@@ -60,9 +74,9 @@ function SideBar({ hidden, setHidden }: Prop) {
               >
                 <PaperPlaneTilt size={32} className={iconClassName} />
                 <span className={sidebarNameClass}>Inbox</span>
-                {!isMobile && (
+                {unReadCount > 0 && !isMobile && (
                   <span className="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-white bg-blue-200 rounded-full dark:bg-Anakiwa ">
-                    3
+                    {unReadCount}
                   </span>
                 )}
               </NavLink>
