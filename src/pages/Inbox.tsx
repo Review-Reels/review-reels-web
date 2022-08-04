@@ -258,7 +258,7 @@ function Inbox() {
             </button>
             <Tooltip message="Clear ask message">
               <div
-                className="bg-Athens_Gray  rounded-r-xl  border-[1px]	 text-Black2 py-1 cursor-pointer"
+                className="bg-Athens_Gray  rounded-r-xl  border-[1px]	 text-Black2 py-1 px-2 cursor-pointer"
                 onClick={() => {
                   navigate(`/inbox`);
                   setSelectedAskMessage(null);
