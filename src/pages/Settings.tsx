@@ -77,7 +77,7 @@ function Settings() {
 
   return (
     <div className="mt-14 mx-4 flex justify-center items-center w-full flex-col">
-      <div className="flex flex-col gap-4 w-full md:w-1/2 p-4">
+      <div className="flex flex-col gap-4 w-full md:w-1/2 p-4 rounded-xl md:border-2">
         <div className="flex flex-col md:flex-row items-center gap-2">
           <label className="w-full font-medium">Username </label>
           <RRInput value={user?.username || ""} disabled />
@@ -113,10 +113,11 @@ function Settings() {
             </div>
           </>
         )}
+        <Button className="bg-primaryRed" onClick={updateUserDetails}>
+          Update
+        </Button>
       </div>
-      <Button className="bg-primaryRed" onClick={updateUserDetails}>
-        Update
-      </Button>
+
       <Toast
         showToast={showToast.show}
         onClose={(value) => setShowToast((prev) => ({ ...prev, show: value }))}
