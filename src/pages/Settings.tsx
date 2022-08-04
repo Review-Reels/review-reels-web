@@ -5,6 +5,8 @@ import { User } from "../types";
 import RRInput from "../components/customComponents/RRInput";
 import Button from "../components/customComponents/Button";
 import Toast from "../components/customComponents/Toast";
+import { CheckCircle } from "phosphor-react";
+import { Tooltip } from "../components/customComponents/ToolTip";
 function Settings() {
   const [user, setUser] = useState<User>({
     authType: "",
@@ -15,6 +17,7 @@ function Settings() {
     name: "",
     username: "",
     password: "",
+    emailVerified: false,
   });
   const [showToast, setShowToast] = useState({
     show: false,
@@ -84,7 +87,17 @@ function Settings() {
         </div>
         <div className="flex flex-col md:flex-row  items-center gap-2">
           <label className="w-full font-medium">Email </label>
-          <RRInput value={user?.email || ""} disabled />
+          <RRInput
+            value={user?.email || ""}
+            disabled
+            iconAppend={
+              user.emailVerified && (
+                <Tooltip message="Email verified">
+                  <CheckCircle size={24} weight="fill" color="#50C878" />
+                </Tooltip>
+              )
+            }
+          />
         </div>
         <div className="flex flex-col md:flex-row   items-center gap-2">
           <label className="w-full font-medium">Merchant Name </label>
