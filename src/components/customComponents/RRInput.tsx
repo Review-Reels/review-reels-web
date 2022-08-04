@@ -29,8 +29,10 @@ function RRInput({
           type={password ? "password" : "text"}
           className={`p-3 w-full ${
             iconAppend ? "rounded-l-xl" : "rounded-xl"
-          } bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 ${className} ${
-            validationText ? "border-red-500 border-2" : ""
+          } bg-Athens_Gray focus:text-gray-700   ${className} ${
+            validationText
+              ? "border-red-500 border-2 focus:border-red-500 outline-red-500"
+              : "focus:border-blue-600"
           }`}
           value={value}
           onChange={(event) => onChange && onChange(event.target.value)}
