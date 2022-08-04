@@ -123,3 +123,14 @@ export type ReviewResponse = {
 export interface UpdateIsRead {
   isRead: boolean;
 }
+
+export type User = {
+  authType: string;
+  createdAt: string;
+  email: string;
+  id: string;
+  merchantName: string;
+  name: string;
+  username: string;
+  password?: string;
+};

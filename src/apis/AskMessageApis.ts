@@ -1,5 +1,3 @@
-// import { googleSignUpPayload } from "../types";
-
 import axios from "./axios";
 
 export const getReviewRequest = async () => {
