@@ -5,7 +5,16 @@ import { useStore } from "./store/UserStore";
 function LoggedInRoutes() {
   const user = useStore((state) => state.user);
   const isSignedIn = user && user;
-  return isSignedIn ? <Outlet /> : <Navigate to="signin" />;
+  const usernameSet = !user?.username;
+  return isSignedIn ? (
+    usernameSet ? (
+      <Navigate to="initialdetails" />
+    ) : (
+      <Outlet />
+    )
+  ) : (
+    <Navigate to="signin" />
+  );
 }
 
 export default LoggedInRoutes;

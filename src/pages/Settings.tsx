@@ -7,7 +7,10 @@ import Button from "../components/customComponents/Button";
 import Toast from "../components/customComponents/Toast";
 import { CheckCircle } from "phosphor-react";
 import { Tooltip } from "../components/customComponents/ToolTip";
+import { useStore } from "../store/UserStore";
 function Settings() {
+  const setStoreUser = useStore((state) => state.setUser);
+  const storeUser = useStore((state) => state.user);
   const [user, setUser] = useState<User>({
     authType: "",
     createdAt: "",
@@ -39,7 +42,6 @@ function Settings() {
   }, []);
 
   useEffect(() => {
-    console.log(user.password);
     if (retypePassword && user.password !== retypePassword)
       setPasswordValidation("Passwords don't match");
     else setPasswordValidation("");
@@ -68,6 +70,7 @@ function Settings() {
             message: "Updated",
             type: "success",
           });
+          setStoreUser({ ...storeUser, ...user });
         })
         .catch((err) => {
           setShowToast({

@@ -17,6 +17,7 @@ import ViewAskMessage from "./pages/ViewAskMessage";
 import ThankYou from "./pages/ThankYou";
 import VideoEmbed from "./pages/VideoEmbed";
 import ComingSoon from "./pages/ComingSoon";
+import InitialDetails from "./pages/InitialDetails";
 
 function AllRoutes() {
   return (
@@ -29,6 +30,7 @@ function AllRoutes() {
           <Route path="view/:requestId" element={<ViewAskMessage />} />
           <Route path="thankyou" element={<ThankYou />} />
           <Route path="embed/:responseId" element={<VideoEmbed />} />
+          <Route path="initialdetails" element={<InitialDetails />} />
           <Route element={<LoggedInRoutes />}>
             <Route path="/" element={<HomePage />}>
               <Route path="/" element={<AskMessages />} />

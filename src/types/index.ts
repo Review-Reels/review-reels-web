@@ -134,4 +134,6 @@ export type User = {
   username: string;
   password?: string;
   emailVerified: boolean;
+  Authorization?: string;
+  picture?: string;
 };

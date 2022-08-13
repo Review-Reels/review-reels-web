@@ -8,15 +8,16 @@ interface UserState {
 }
 
 interface User {
-  Authorization: string;
+  Authorization?: string;
   authType: string;
   createdAt: string;
   email: string;
   id: string;
   merchantName: string;
   name: string;
-  picture: string;
+  picture?: string;
   username: string;
+  emailVerified?: boolean;
 }
 
 export const useStore = create<UserState>()(
