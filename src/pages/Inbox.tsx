@@ -28,6 +28,7 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import EmbedComponent from "../components/EmbedComponent";
 import { Tooltip } from "../components/customComponents/ToolTip";
 import { useUnReadStore } from "../store/UnReadStore";
+import EmptyReply from "../images/EmptyResponse.svg";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -229,6 +230,21 @@ function Inbox() {
     [reviewResponses]
   );
 
+  if (
+    reviewResponses.length === 0 &&
+    !loading &&
+    !search &&
+    !selectedAsKMessage
+  )
+    return (
+      <div className="w-full flex justify-center items-center flex-col gap-4 h-screen">
+        <img src={EmptyReply} width={200} alt="empty ask message" />
+        <h1 className="text-2xl font-bold text-center text-Black2">
+          You have no replies yet
+        </h1>
+      </div>
+    );
+
   return (
     <Fragment>
       <div className="w-full overflow-hidden mt-12">
@@ -282,6 +298,16 @@ function Inbox() {
         </div>
         {loading ? (
           <Loader />
+        ) : reviewResponses.length === 0 && (search || selectedAsKMessage) ? (
+          <div className="flex justify-center items-center flex-col gap-4 h-full">
+            <img src={EmptyReply} width={200} alt="empty ask message" />
+            <h1 className="text-2xl font-bold text-center text-Black2">
+              No Replies found
+            </h1>
+            <h2 className="text-xl font-medium text-center text-Black2">
+              Try changing the filters or search term
+            </h2>
+          </div>
         ) : (
           <div className="max-h-[35rem] md:max-h-[45rem] overflow-y-auto md:h-auto m-2 md:m-10 lg:m-10">
             {listView}

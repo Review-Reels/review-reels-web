@@ -24,12 +24,14 @@ const AskMessages = () => {
   const [name, setName] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [initialLoading, setInitialLoading] = useState<boolean>(false);
 
   const handleOnChange = () => {
     setIsVideo(!isVideo);
   };
 
   useEffect(() => {
+    setInitialLoading(true);
     getReviewRequest()
       .then((res) => {
         setAskMessages(res.data);
@@ -40,6 +42,9 @@ const AskMessages = () => {
           message: err.response.data.message,
           type: "failure",
         });
+      })
+      .finally(() => {
+        setInitialLoading(false);
       });
   }, []);
 
@@ -79,6 +84,7 @@ const AskMessages = () => {
         <AskMessagesList
           askMessages={askMessages}
           handleDelete={handleDelete}
+          initialLoading={initialLoading}
         />
         <div className="flex justify-center">
           <div className="fixed bottom-4">

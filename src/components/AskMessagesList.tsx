@@ -16,9 +16,11 @@ import Button from "../components/customComponents/Button";
 import Toast from "../components/customComponents/Toast";
 import { colorList } from "../constants/ColorList";
 import { getFormatedDate } from "../utils/Time";
+import EmptyAskMessageIcon from "../images/EmptyAskMessage.svg";
 
 interface propType {
   askMessages: AskMessage[];
+  initialLoading?: boolean;
   handleDelete?: (id: string) => void;
   handleClickItem?: (item: AskMessage) => void;
 }
@@ -27,6 +29,7 @@ function AskMessagesList({
   askMessages,
   handleDelete,
   handleClickItem,
+  initialLoading,
 }: propType) {
   const [open, setOpen] = useState(false);
 
@@ -61,15 +64,32 @@ function AskMessagesList({
       setCopied(false);
     }
   };
+  if (askMessages.length === 0 && !initialLoading)
+    return (
+      <div className="w-full flex justify-center items-center flex-col gap-4 h-full">
+        <img src={EmptyAskMessageIcon} width={200} alt="empty ask message" />
+        <h1 className="text-2xl font-bold text-center text-Black5">
+          Welcome to ReviewReels- An easy way to collect the testimonials and
+          publish!
+        </h1>
+        <h2 className="text-xl font-medium text-center text-Black2">
+          Let's quickly get started with, Creating your first ask message
+        </h2>
+        <h3 className="text-xl text-center text-Black2">
+          Need more help in getting started?- Ask us
+        </h3>
+      </div>
+    );
+
   return (
     <div className="w-full">
-      <div className="w-full flex justify-center mx-4 my-2">
+      {/* <div className="w-full flex justify-center mx-4 my-2">
         <input
           type="text"
           className="mr-2 md:mr-10 p-3 pl-10  w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
           placeholder="Search.."
         />
-      </div>
+      </div> */}
       <div className="max-h-[45rem] overflow-y-auto md:h-auto">
         {askMessages.map((item, index) => {
           const { askMessage, createdAt, imageUrl, id, name } = item;

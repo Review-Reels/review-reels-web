@@ -3,53 +3,6 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-export type RootStackParamList = {
-  NotFound: undefined;
-  Login: undefined;
-  ReviewRequest: undefined;
-  ReviewDetails: { id: number };
-  Home: undefined;
-  ShareRequest: undefined;
-  ViewRequest: { merchant: string };
-  SubmitSuccess: { merchantName: string };
-  Loading: undefined;
-  SendEmails: undefined;
-  PublishReview: undefined;
-  ReviewResponseDetails: { reviewRequest: any; reviewResponse: any };
-  Subscription: undefined;
-  Profile: undefined;
-  EmailSignIn: undefined;
-  EmailSignUp: undefined;
-};
-
-export type TextInputProps = {
-  placeholder?: string;
-  value?: string | undefined;
-  error?: string;
-  label?: string;
-  onChangeText: Function;
-  onSubmitEditing?: undefined;
-  disabled?: boolean;
-  numberOfLines?: number;
-  multiline?: boolean;
-  ref?: any;
-  password?: boolean;
-};
-
-export type ButtonProps = {
-  title: string;
-  onPress: Function;
-  isDisabled?: boolean;
-  mode?: string;
-  icon?: string;
-};
-
-export type CameraProps = {
-  isOpen: boolean;
-  onClose: Function;
-  onCapture: Function;
-};
-
 export type SignupPayload = {
   username: string;
   email: string;
