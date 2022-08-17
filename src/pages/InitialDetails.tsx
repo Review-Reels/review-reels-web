@@ -6,6 +6,7 @@ import { User } from "../types";
 import { useStore } from "../store/UserStore";
 import Toast from "../components/customComponents/Toast";
 import { useNavigate } from "react-router-dom";
+import { validateUsername } from "../utils/validate";
 
 function InitialDetails() {
   const setStoreUser = useStore((state) => state.setUser);
@@ -53,6 +54,11 @@ function InitialDetails() {
   };
 
   const handleUserName = (value: string) => {
+    if (validateUsername(value)) setUsernameValidation("");
+    else
+      setUsernameValidation(
+        "Username can only use letters,numbers, minimum length is 8 characters"
+      );
     setUser((prev) => ({
       ...prev,
       username: value,

@@ -29,6 +29,7 @@ export type signUpPayload = {
   password: string;
   name: string;
   username: string;
+  merchantName: string;
 };
 
 export type updateUserPayload = {

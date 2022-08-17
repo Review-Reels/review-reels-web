@@ -10,7 +10,7 @@ import {
   Tag,
   PaperPlaneTilt,
 } from "phosphor-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useCheckMobileScreen from "../hooks/checkMobileDevice";
 import { useStore } from "../store/UserStore";
 import { useUnReadStore } from "../store/UnReadStore";
@@ -22,8 +22,11 @@ interface Prop {
 function SideBar({ hidden, setHidden }: Prop) {
   const isMobile = useCheckMobileScreen();
   const resetUser = useStore((state) => state.resetUser);
+  const user = useStore((state) => state.user);
   const unReadCount = useUnReadStore((state) => state.unRead);
   const setUnRead = useUnReadStore((state) => state.setUnRead);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     getUnReadStatistics()
@@ -38,6 +41,11 @@ function SideBar({ hidden, setHidden }: Prop) {
   const signOut = () => {
     resetUser();
   };
+
+  useEffect(() => {
+    const usernameSet = !user?.username;
+    if (usernameSet) navigate("initialdetails");
+  }, [user?.username, navigate]);
 
   let activeClassName =
     "flex items-center p-2 text-base font-normal text-Black2 rounded-2xl dark:text-black hover:bg-Peach_Cream-dark dark:hover:bg-Peach_Cream-dark bg-Peach_Cream-dark";
