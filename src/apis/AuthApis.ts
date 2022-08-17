@@ -13,3 +13,7 @@ export function emailSignIn(payload: signInPayload | undefined) {
 export function emailSignup(payload: signUpPayload | undefined) {
   return axios.post("auth/signup", payload);
 }
+
+export function verifyEmail(email: string, verifyHash: string) {
+  return axios.post("auth/verifyEmail", { email, verifyHash });
+}

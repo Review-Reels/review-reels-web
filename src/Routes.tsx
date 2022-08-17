@@ -18,6 +18,7 @@ import ThankYou from "./pages/ThankYou";
 import VideoEmbed from "./pages/VideoEmbed";
 import ComingSoon from "./pages/ComingSoon";
 import InitialDetails from "./pages/InitialDetails";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function AllRoutes() {
   return (
@@ -30,6 +31,7 @@ function AllRoutes() {
           <Route path="view/:requestId" element={<ViewAskMessage />} />
           <Route path="thankyou" element={<ThankYou />} />
           <Route path="embed/:responseId" element={<VideoEmbed />} />
+          <Route path="verify/:email/:verifyHash" element={<VerifyEmail />} />
           <Route path="initialdetails" element={<InitialDetails />} />
           <Route element={<LoggedInRoutes />}>
             <Route path="/" element={<HomePage />}>
