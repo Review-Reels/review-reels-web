@@ -162,6 +162,7 @@ function AskMessagesList({
             <Link
               to={`/view/${askMessage?.id}`}
               className="flex gap-2 items-center"
+              target="_blank"
             >
               <LinkIcon size={22} weight="bold" />
               <h1 className="text-xl text-Black underline text-clip">

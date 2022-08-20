@@ -81,7 +81,7 @@ function ViewAskMessage() {
         open={open}
         handleClose={setOpen}
         loading={loading}
-        PrimaryButtonTitle="Save"
+        PrimaryButtonTitle="Submit"
         handlePrimaryAction={saveReviewResponse}
       >
         <div className="flex flex-col space-y-5">
