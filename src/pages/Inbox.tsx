@@ -25,6 +25,7 @@ import {
   ArrowsClockwise,
   Backspace,
   Copy,
+  DownloadSimple,
 } from "phosphor-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { debounce } from "ts-debounce";
@@ -368,6 +369,19 @@ function Inbox() {
                   <Copy size={24} className="mr-2" />
                   {copied ? "Copied!" : "Copy Code"}
                 </Button>
+
+                {reviewResponse?.videoUrl && (
+                  <a href={getUrl(reviewResponse?.videoUrl)} download>
+                    <Button className="px-6 py-1 flex justify-center items-center text-white no-underline bg-Peach_Orange rounded-full first-letter:uppercase">
+                      <DownloadSimple
+                        size={24}
+                        weight="fill"
+                        className="mr-2"
+                      />
+                      Download
+                    </Button>
+                  </a>
+                )}
               </div>
             </div>
           </div>
