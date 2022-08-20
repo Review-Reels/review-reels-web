@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Check } from "phosphor-react";
 
 const PRICING_CONSTANT = {
@@ -38,6 +38,25 @@ const PRICING_CONSTANT = {
 };
 
 function Pricing() {
+  const loadGMaps = (url: string, callback: () => void) => {
+    const existingScript = document.getElementById("googleMaps");
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.src = url;
+      document.body.appendChild(script);
+      script.onload = () => {
+        if (callback) callback();
+      };
+    }
+    if (existingScript && callback) callback();
+  };
+
+  useEffect(() => {
+    loadGMaps("https://gumroad.com/js/gumroad.js", () => {
+      console.log("loaded gumroad");
+    });
+  });
+
   return (
     <div className="mt-12 mx-4 w-full">
       <div className="flex justify-center items-center flex-col">
