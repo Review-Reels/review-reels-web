@@ -87,18 +87,16 @@ function ViewAskMessage() {
         <div className="flex flex-col space-y-5">
           <div className="bg-Peach_Cream-normal rounded p-2 ">
             <ul className="list-disc">
-              <li>
-                Please try to keep it on point, so that your customers get it
-                easily.
-              </li>
+              <li>Try to to keep it on point.</li>
               {isVideo && (
                 <>
                   <li>
-                    You can create a short video of duration less than 60
-                    seconds.
+                    Short videos of duration less than 60 seconds have maximum
+                    impact compared to long one.
                   </li>
                   <li>
-                    You can upload a video from phone or you can record one.
+                    You can either upload pre shoot video or record using our
+                    tool
                   </li>
                 </>
               )}
@@ -122,7 +120,9 @@ function ViewAskMessage() {
             </div>
           ) : (
             <div className="flex flex-col">
-              <label className="uppercase mb-2">reply message</label>
+              <label className="first-letter:uppercase mb-2">
+                reply message
+              </label>
               <textarea
                 value={replyMessage}
                 onChange={(e) => setReplyMessage(e.target.value)}
@@ -132,7 +132,7 @@ function ViewAskMessage() {
             </div>
           )}
           <div className="flex flex-col">
-            <label className="uppercase mb-2">your name</label>
+            <label className="first-letter:uppercase mb-2">your name</label>
             <input
               type="text"
               className="p-3 bg-Athens_Gray"
@@ -141,7 +141,9 @@ function ViewAskMessage() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="uppercase mb-2">What you do (optional)</label>
+            <label className="first-letter:uppercase mb-2">
+              What you do (optional)
+            </label>
             <input
               type="text"
               className="p-3 bg-Athens_Gray"

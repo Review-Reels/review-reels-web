@@ -205,7 +205,7 @@ function AskMessagesList({
             </div>
           </div> */}
           <div className="flex justify-center items-center cursor-pointer m-2">
-            <h3 className="text-xl text-Charade font-medium	italic text-center">
+            <h3 className="text-xl text-Charade font-medium	 text-center">
               This is how your ask message will be shown to users
             </h3>
           </div>

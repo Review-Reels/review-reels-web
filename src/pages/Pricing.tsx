@@ -8,7 +8,7 @@ const PRICING_CONSTANT = {
     interval: "",
     price: 0.0,
     features: [
-      "1 Review Ask message ",
+      "1 Testimonial Ask message ",
       "4 Video Testmonials ",
       "Unlimited Text Testimonials ",
       "Testimonials Wall Page to embed ",
@@ -24,7 +24,7 @@ const PRICING_CONSTANT = {
     interval: "/Mo",
     price: 25.0,
     features: [
-      "Unlimitted Review Ask message ",
+      "Unlimitted Testimonial Ask message ",
       "Unlimited Video Testmonials ",
       "Unlimited Text Testimonials ",
       "Testimonials Wall Page to embed ",

@@ -89,10 +89,10 @@ const AskMessages = () => {
         <div className="flex justify-center">
           <div className="fixed bottom-4">
             <Button
-              className="bg-primaryRed shadow-lg  drop-shadow-md"
+              className="bg-primaryRed shadow-lg  drop-shadow-md first-letter:uppercase"
               onClick={() => setOpen(true)}
             >
-              Create an Ask Message
+              Create a testimonial ask message
             </Button>
           </div>
           <Modal
@@ -105,11 +105,13 @@ const AskMessages = () => {
           >
             <div className="flex flex-col space-y-5">
               <div className="bg-Peach_Cream-normal rounded p-2">
-                The card below will be shown to your customers as a message from
-                you. Let’s make it sound irresistable!
+                Create your testimonial message. This will be shown to your
+                customers, let’s make it sound irresistible!
               </div>
               <div className="flex flex-col">
-                <label className="uppercase mb-2">ask message name</label>
+                <label className="first-letter:uppercase mb-2">
+                  ask message name
+                </label>
                 <input
                   type="text"
                   className="p-3 bg-Athens_Gray"
@@ -118,7 +120,9 @@ const AskMessages = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <label className="uppercase mb-2">ask message</label>
+                <label className="first-letter:uppercase mb-2">
+                  ask message
+                </label>
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -132,7 +136,9 @@ const AskMessages = () => {
                   onChange={handleOnChange}
                   className="w-6 h-6 bg-gray-100 rounded border-gray-300 focus:none  dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
-                <label className="uppercase mx-2">include video</label>
+                <label className="first-letter:uppercase mx-2">
+                  include the video ask message
+                </label>
               </div>
               {isVideo && (
                 <div className="flex justify-center flex-col items-center">

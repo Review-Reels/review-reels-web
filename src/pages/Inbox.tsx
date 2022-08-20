@@ -20,7 +20,12 @@ import { colorList } from "../constants/ColorList";
 import Modal from "../components/customComponents/Modal";
 import Loader from "../components/customComponents/Loader";
 import AskMessagesList from "../components/AskMessagesList";
-import { MagnifyingGlass, ArrowsClockwise, Backspace } from "phosphor-react";
+import {
+  MagnifyingGlass,
+  ArrowsClockwise,
+  Backspace,
+  Copy,
+} from "phosphor-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { debounce } from "ts-debounce";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -29,6 +34,7 @@ import EmbedComponent from "../components/EmbedComponent";
 import { Tooltip } from "../components/customComponents/ToolTip";
 import { useUnReadStore } from "../store/UnReadStore";
 import EmptyReply from "../images/EmptyResponse.svg";
+import Button from "../components/customComponents/Button";
 
 function Inbox() {
   const [reviewResponses, setReviewResponses] = useState<ReviewResponse[] | []>(
@@ -42,6 +48,7 @@ function Inbox() {
     useState<AskMessage | null>(null);
   const [open, setOpen] = useState(false);
   const [openAskMessageList, setOpenAskMessageList] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const [showToast, setShowToast] = useState({
     show: false,
@@ -154,6 +161,11 @@ function Inbox() {
     navigate(`/inbox/${askMessage.id}`);
     setSelectedAskMessage(askMessage);
     setOpenAskMessageList(false);
+  };
+
+  const handleCloseEmbed = (value: boolean) => {
+    setOpen(value);
+    setCopied(false);
   };
 
   const listView = useMemo(
@@ -322,11 +334,14 @@ function Inbox() {
           toastMessage={showToast.message}
           type={showToast.type}
         />
-        <Modal open={open} handleClose={setOpen}>
+        <Modal open={open} handleClose={handleCloseEmbed}>
           <div>
+            {reviewResponse && (
+              <EmbedComponent reviewResponse={reviewResponse} />
+            )}
             <div>
               <span className="text-Black2 font-semibold">
-                Embed review to your website
+                Embed the testimonial, copy and paste following code
               </span>
               <SyntaxHighlighter
                 language="javascript"
@@ -338,10 +353,23 @@ function Inbox() {
                   "embed/" + reviewResponse?.id
                 )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`}
               </SyntaxHighlighter>
+              <div className="w-full flex justify-end">
+                <Button
+                  className="bg-Anakiwa "
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `<iframe src="${getWebUrl(
+                        "embed/" + reviewResponse?.id
+                      )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`
+                    );
+                    setCopied(true);
+                  }}
+                >
+                  <Copy size={24} className="mr-2" />
+                  {copied ? "Copied!" : "Copy Code"}
+                </Button>
+              </div>
             </div>
-            {reviewResponse && (
-              <EmbedComponent reviewResponse={reviewResponse} />
-            )}
           </div>
         </Modal>
         <Modal open={openAskMessageList} handleClose={setOpenAskMessageList}>
