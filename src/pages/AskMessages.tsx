@@ -126,7 +126,7 @@ const AskMessages = () => {
               className="bg-primaryRed shadow-lg  drop-shadow-md first-letter:uppercase"
               onClick={() => setOpen(true)}
             >
-              Create a testimonial ask message
+              Create an ask message
             </Button>
           </div>
           <Modal

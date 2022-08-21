@@ -27,6 +27,8 @@ function AskMessagesList({
   initialLoading,
 }: propType) {
   const [open, setOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState("");
 
   const [askMessage, setAskMessage] = useState<AskMessage>();
   const [copied, setCopied] = useState(false);
@@ -41,6 +43,7 @@ function AskMessagesList({
       await deleteReviewRequest(id);
       if (handleDelete) handleDelete(id);
       setShowToast({ show: true, message: "Deleted", type: "success" });
+      setDeleteOpen(false);
     } catch (err) {
       setShowToast({
         show: true,
@@ -132,7 +135,10 @@ function AskMessagesList({
                     </div> */}
                     <div
                       className="flex rounded-full bg-Black6 h-10 w-10 justify-center items-center"
-                      onClick={() => deleteAskMessage(id)}
+                      onClick={() => {
+                        setDeleteOpen(true);
+                        setDeleteId(id);
+                      }}
                     >
                       <TrashSimple size={28} />
                     </div>
@@ -210,6 +216,23 @@ function AskMessagesList({
             <ViewMessageComponent askMessage={askMessage} />
           </div>
         </div>
+      </Modal>
+      <Modal
+        open={deleteOpen}
+        handleClose={setDeleteOpen}
+        handlePrimaryAction={() => deleteAskMessage(deleteId)}
+        handleSecondaryAction={() => {
+          setDeleteOpen(false);
+          setDeleteId("");
+        }}
+        title="Delete"
+        PrimaryButtonTitle="Yes"
+        secondaryTitle="No"
+      >
+        <p className="text-primaryRed text-xl text-center font-medium">
+          All the customer replies to this message will be deleted. Do you want
+          to proceed?
+        </p>
       </Modal>
       <Toast
         showToast={showToast.show}

@@ -5,9 +5,11 @@ interface Props {
   title?: string | ReactNode;
   open: boolean;
   PrimaryButtonTitle?: string;
+  secondaryTitle?: string;
   loading?: boolean;
   handleClose: (value: boolean) => void;
   handlePrimaryAction?: (value: boolean) => void;
+  handleSecondaryAction?: (value: boolean) => void;
   children?: ReactNode;
 }
 function Modal({
@@ -15,8 +17,10 @@ function Modal({
   title,
   handleClose,
   handlePrimaryAction,
+  handleSecondaryAction,
   children,
   PrimaryButtonTitle,
+  secondaryTitle,
   loading,
 }: Props) {
   return (
@@ -44,8 +48,23 @@ function Modal({
                   {children}
                 </div>
                 {/*footer*/}
-                {PrimaryButtonTitle && handlePrimaryAction && (
-                  <div className="flex items-center justify-center p-6 border-slate-200 rounded-b">
+                <div
+                  className={
+                    secondaryTitle
+                      ? "flex justify-end"
+                      : "flex items-center justify-center p-6 border-slate-200 rounded-b"
+                  }
+                >
+                  {secondaryTitle && handleSecondaryAction && (
+                    <Button
+                      className="bg-Charade shadow-lg  drop-shadow-md"
+                      onClick={() => handleSecondaryAction(true)}
+                      loading={loading}
+                    >
+                      {secondaryTitle}
+                    </Button>
+                  )}
+                  {PrimaryButtonTitle && handlePrimaryAction && (
                     <Button
                       className="bg-primaryRed shadow-lg  drop-shadow-md"
                       onClick={() => handlePrimaryAction(true)}
@@ -53,8 +72,8 @@ function Modal({
                     >
                       {PrimaryButtonTitle}
                     </Button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>

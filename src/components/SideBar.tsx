@@ -70,9 +70,7 @@ function SideBar({ hidden, setHidden }: Prop) {
               >
                 <ChatTeardropDots size={32} className={iconClassName} />
 
-                <span className={sidebarNameClass}>
-                  Testimonial Ask message
-                </span>
+                <span className={sidebarNameClass}>Ask message</span>
               </NavLink>
             </li>
             <li>
