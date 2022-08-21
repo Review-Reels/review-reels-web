@@ -8,6 +8,8 @@ import RRCamera from "../components/customComponents/RRCamera.jsx";
 import RRFileLoader from "../components/customComponents/RRFileLoader";
 import { createReviewResponse } from "../apis/ReviewResponseApis";
 import { useNavigate } from "react-router-dom";
+import RRInput from "../components/customComponents/RRInput";
+import RRTextArea from "../components/customComponents/RRTextArea";
 
 function ViewAskMessage() {
   let navigate = useNavigate();
@@ -20,6 +22,9 @@ function ViewAskMessage() {
   const [recordedVideo, setRecordedVideo] = useState<string>("");
   const [videoType, setVideoType] = useState<string>("");
   const [replyMessage, setReplyMessage] = useState<string>("");
+  const [messageValidation, setMessageValidation] = useState("");
+  const [videoValidation, setVideoValidation] = useState("");
+  const [nameValidation, setNameValidation] = useState("");
 
   const [askMessage, setAskMessage] = useState<AskMessage>();
   let { requestId } = useParams();
@@ -36,6 +41,19 @@ function ViewAskMessage() {
   }, [callApi]);
 
   const saveReviewResponse = async () => {
+    if (!isVideo && !replyMessage) {
+      setMessageValidation("Reply message is required");
+      return;
+    }
+    if (!customerName) {
+      setNameValidation("Name is required");
+      return;
+    }
+    if (isVideo && !recordedVideo) {
+      setVideoValidation("Please record/upload a video before saving");
+      return;
+    }
+
     setLoading(true);
     let formData = new FormData();
     let blob = await fetch(recordedVideo).then((r) => r.blob());
@@ -64,6 +82,23 @@ function ViewAskMessage() {
       });
   };
 
+  const handleReplyMessage = (value: string) => {
+    if (!value) {
+      setMessageValidation("Reply message is required");
+    } else {
+      setMessageValidation("");
+    }
+    setReplyMessage(value);
+  };
+  const handleNameChange = (value: string) => {
+    if (!value) {
+      setNameValidation("Name is required");
+    } else {
+      setNameValidation("");
+    }
+    setCustomerName(value);
+  };
+
   return (
     <div className="flex justify-center items-center m-10 md:m-2">
       <ViewMessageComponent
@@ -71,10 +106,12 @@ function ViewAskMessage() {
         onReplyWithVideoClick={() => {
           setOpen(true);
           setIsVideo(true);
+          setVideoValidation("");
         }}
         onReplyWithTextClick={() => {
           setOpen(true);
           setIsVideo(false);
+          setVideoValidation("");
         }}
       />
       <Modal
@@ -117,15 +154,17 @@ function ViewAskMessage() {
                   setVideoType(type);
                 }}
               />
+              <p className="text-red-500">{videoValidation}</p>
             </div>
           ) : (
             <div className="flex flex-col">
               <label className="first-letter:uppercase mb-2">
                 reply message
               </label>
-              <textarea
+              <RRTextArea
                 value={replyMessage}
-                onChange={(e) => setReplyMessage(e.target.value)}
+                onChange={handleReplyMessage}
+                validationText={messageValidation}
                 rows={10}
                 className="p-2 bg-Athens_Gray"
               />
@@ -133,22 +172,19 @@ function ViewAskMessage() {
           )}
           <div className="flex flex-col">
             <label className="first-letter:uppercase mb-2">your name</label>
-            <input
-              type="text"
-              className="p-3 bg-Athens_Gray"
+            <RRInput
               value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
+              onChange={handleNameChange}
+              validationText={nameValidation}
             />
           </div>
           <div className="flex flex-col">
             <label className="first-letter:uppercase mb-2">
-              What you do (optional)
+              What you do / Company (optional)
             </label>
-            <input
-              type="text"
-              className="p-3 bg-Athens_Gray"
+            <RRInput
               value={whatYouDo}
-              onChange={(e) => setWhatYouDo(e.target.value)}
+              onChange={(value) => setWhatYouDo(value)}
             />
           </div>
         </div>

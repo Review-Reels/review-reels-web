@@ -8,6 +8,7 @@ interface InputType {
   autoFocus?: boolean;
   disabled?: boolean;
   iconAppend?: ReactNode;
+  rows?: number;
 }
 function RRTextArea({
   value,
@@ -17,11 +18,13 @@ function RRTextArea({
   autoFocus,
   disabled,
   iconAppend,
+  rows,
 }: InputType) {
   return (
     <div className="flex flex-col w-full">
       <div className="flex items-center">
         <textarea
+          rows={rows}
           autoFocus={autoFocus}
           disabled={disabled}
           className={`p-3 w-full ${
