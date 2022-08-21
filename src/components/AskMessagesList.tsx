@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  PencilSimple,
-  TrashSimple,
-  Export,
-  Link as LinkIcon,
-} from "phosphor-react";
+import { TrashSimple, Export, Link as LinkIcon } from "phosphor-react";
 import { AskMessage } from "../types";
 import { getUrl, getWebUrl } from "../utils/S3Utils";
 import { deleteReviewRequest } from "../apis/AskMessageApis";
@@ -129,12 +124,12 @@ function AskMessagesList({
                 </div>
                 {!handleClickItem && (
                   <div className="cursor-pointer flex gap-2 justify-end px-2 py-4">
-                    <div
+                    {/* <div
                       className="flex rounded-full bg-Black6 h-10 w-10 justify-center items-center"
                       onClick={() => console.log("jhgh")}
                     >
                       <PencilSimple size={28} />
-                    </div>
+                    </div> */}
                     <div
                       className="flex rounded-full bg-Black6 h-10 w-10 justify-center items-center"
                       onClick={() => deleteAskMessage(id)}
@@ -170,8 +165,8 @@ function AskMessagesList({
               </h1>
             </Link>
             <p className="text-Black2">
-              Your ask message is available on the above link, share with
-              customers to get reviews.
+              The testimonial message is available on the above link. Share with
+              your customers to get testimonials.
             </p>
             <div className="flex flex-col md:flex-row">
               {/* <Button className="bg-Black4">
@@ -207,7 +202,8 @@ function AskMessagesList({
           </div> */}
           <div className="flex justify-center items-center cursor-pointer m-2">
             <h3 className="text-xl text-Charade font-medium	 text-center">
-              This is how your ask message will be shown to users
+              This is how your ask message will be shown to users- Preview of
+              you ask message
             </h3>
           </div>
           <div className=" flex justify-center items-center cursor-pointer">

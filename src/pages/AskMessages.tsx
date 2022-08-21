@@ -9,6 +9,8 @@ import RRFileLoader from "../components/customComponents/RRFileLoader";
 
 import { getReviewRequest, createReviewRequest } from "../apis/AskMessageApis";
 import { AskMessage as AskMessageType } from "../types";
+import RRInput from "../components/customComponents/RRInput";
+import RRTextArea from "../components/customComponents/RRTextArea";
 
 const AskMessages = () => {
   const [askMessages, setAskMessages] = useState<AskMessageType[] | []>([]);
@@ -25,6 +27,9 @@ const AskMessages = () => {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [initialLoading, setInitialLoading] = useState<boolean>(false);
+  const [nameValidation, setNameValidation] = useState("");
+  const [messageValidation, setMessageValidation] = useState("");
+  const [videoValidation, setVideoValidation] = useState("");
 
   const handleOnChange = () => {
     setIsVideo(!isVideo);
@@ -49,6 +54,18 @@ const AskMessages = () => {
   }, []);
 
   const saveAskMessage = async () => {
+    if (!name) {
+      setNameValidation("Ask message name is required");
+      return;
+    }
+    if (!message) {
+      setMessageValidation("Ask message is required");
+      return;
+    }
+    if (isVideo && !recordedVideo) {
+      setVideoValidation("Please record/upload a video before saving");
+      return;
+    }
     setLoading(true);
     let formData = new FormData();
     let blob = await fetch(recordedVideo).then((r) => r.blob());
@@ -76,6 +93,23 @@ const AskMessages = () => {
   };
   const handleDelete = (id: string) => {
     setAskMessages((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleNameChange = (value: string) => {
+    if (!value) {
+      setNameValidation("Ask message name is required");
+    } else {
+      setNameValidation("");
+    }
+    setName(value);
+  };
+  const handleMessageChange = (value: string) => {
+    if (!value) {
+      setMessageValidation("Ask message name is required");
+    } else {
+      setMessageValidation("");
+    }
+    setMessage(value);
   };
 
   return (
@@ -112,23 +146,25 @@ const AskMessages = () => {
                 <label className="first-letter:uppercase mb-2">
                   ask message name
                 </label>
-                <input
-                  type="text"
+                <RRInput
                   className="p-3 bg-Athens_Gray"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={handleNameChange}
+                  validationText={nameValidation}
                 />
               </div>
               <div className="flex flex-col">
                 <label className="first-letter:uppercase mb-2">
                   ask message
                 </label>
-                <textarea
+                <RRTextArea
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={handleMessageChange}
                   className="p-3  bg-Athens_Gray"
+                  validationText={messageValidation}
                 />
               </div>
+              <p className="text-red-500">{videoValidation}</p>
               <div className="flex start">
                 <input
                   type="checkbox"
@@ -146,6 +182,7 @@ const AskMessages = () => {
                     onVideoRecorded={(recordedVideo: string, type: string) => {
                       setRecordedVideo(recordedVideo);
                       setVideoType(type);
+                      setVideoValidation("");
                     }}
                   />
                   <div className="py-5 hidden md:flex lg:flex">OR</div>
@@ -153,6 +190,7 @@ const AskMessages = () => {
                     onVideoRecorded={(recordedVideo: string, type: string) => {
                       setRecordedVideo(recordedVideo);
                       setVideoType(type);
+                      setVideoValidation("");
                     }}
                   />
                 </div>
