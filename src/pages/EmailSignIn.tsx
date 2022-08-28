@@ -58,7 +58,7 @@ function EmailSignIn() {
             sign in
           </div>
           <div className="flex flex-col">
-            <label className="uppercase mb-2">email</label>
+            <label className="first-letter:uppercase mb-2">email</label>
             <RRInput
               value={email}
               onChange={handleEmail}
@@ -66,7 +66,7 @@ function EmailSignIn() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="uppercase my-2">password</label>
+            <label className="first-letter:uppercase my-2">password</label>
             <RRInput
               password
               value={password}

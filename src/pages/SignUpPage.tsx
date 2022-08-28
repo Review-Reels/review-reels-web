@@ -102,7 +102,7 @@ function SignUpPage() {
             sign up
           </div>
           <div className="flex flex-col">
-            <label className="uppercase mb-2">email</label>
+            <label className="first-letter:uppercase my-2">email</label>
             <RRInput
               value={email}
               onChange={handleEmail}
@@ -110,7 +110,7 @@ function SignUpPage() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="uppercase mb-2">username</label>
+            <label className="first-letter:uppercase my-2">username</label>
             <RRInput
               value={username}
               onChange={handleUsername}
@@ -118,11 +118,11 @@ function SignUpPage() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="uppercase mb-2">merchant name</label>
+            <label className="first-letter:uppercase my-2">company name</label>
             <RRInput value={merchantName} onChange={setMerchantName} />
           </div>
           <div className="flex flex-col">
-            <label className="uppercase my-2">password</label>
+            <label className="first-letter:uppercase my-2">password</label>
             <RRInput
               password
               value={password}
@@ -130,7 +130,9 @@ function SignUpPage() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="uppercase my-2">retype password</label>
+            <label className="first-letter:uppercase my-2">
+              retype password
+            </label>
             <RRInput
               password
               value={retypePassword}
