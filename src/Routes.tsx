@@ -19,6 +19,8 @@ import VideoEmbed from "./pages/VideoEmbed";
 import ComingSoon from "./pages/ComingSoon";
 import InitialDetails from "./pages/InitialDetails";
 import VerifyEmail from "./pages/VerifyEmail";
+import ForgottenPassword from "./pages/ForgottenPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function AllRoutes() {
   return (
@@ -33,6 +35,11 @@ function AllRoutes() {
           <Route path="embed/:responseId" element={<VideoEmbed />} />
           <Route path="verify/:email/:verifyHash" element={<VerifyEmail />} />
           <Route path="initialdetails" element={<InitialDetails />} />
+          <Route path="forgot-password" element={<ForgottenPassword />} />
+          <Route
+            path="reset/:email/:passwordResetHash"
+            element={<ResetPassword />}
+          />
           <Route element={<LoggedInRoutes />}>
             <Route path="/" element={<HomePage />}>
               <Route path="/" element={<AskMessages />} />

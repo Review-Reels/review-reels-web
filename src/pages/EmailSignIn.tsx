@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { emailSignIn } from "../apis/AuthApis";
 import Button from "../components/customComponents/Button";
 import { useStore } from "../store/UserStore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RRInput from "../components/customComponents/RRInput";
 import { validateEmail } from "../utils/validate";
 import Toast from "../components/customComponents/Toast";
@@ -43,12 +43,12 @@ function EmailSignIn() {
     }
   };
   const handleEmail = (value: string) => {
-    if (!validateEmail(email)) {
+    if (!validateEmail(value.trim())) {
       setEmailValidate("Enter a valid email");
     } else {
       setEmailValidate("");
     }
-    setEmail(value);
+    setEmail(value.trim());
   };
   return (
     <div>
@@ -72,6 +72,11 @@ function EmailSignIn() {
               value={password}
               onChange={(value) => setPassword(value)}
             />
+          </div>
+          <div className="flex flex-col my-2 items-end">
+            <Link to="/forgot-password" className="text-blue-900">
+              forgotten password?
+            </Link>
           </div>
           <Button
             className="bg-primaryRed shadow-lg  drop-shadow-md my-4 px-10 flex gap-4"

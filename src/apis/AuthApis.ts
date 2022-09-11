@@ -17,3 +17,19 @@ export function emailSignup(payload: signUpPayload | undefined) {
 export function verifyEmail(email: string, verifyHash: string) {
   return axios.post("auth/verifyEmail", { email, verifyHash });
 }
+
+export function sendResetPasswordEmail(email: string) {
+  return axios.post("auth/sendResetPasswordEmail", { email });
+}
+
+export function resetPassword(
+  email: string,
+  verifyHash: string,
+  password: string
+) {
+  return axios.post("auth/resetPassword", {
+    email,
+    verifyHash,
+    password,
+  });
+}

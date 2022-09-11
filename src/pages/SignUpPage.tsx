@@ -69,23 +69,23 @@ function SignUpPage() {
     }
   };
   const handleEmail = (value: string) => {
-    if (!validateEmail(email)) {
+    if (!validateEmail(value.trim())) {
       setEmailValidate("Enter a valid email");
     } else {
       setEmailValidate("");
     }
-    setEmail(value);
+    setEmail(value.trim());
   };
 
   const handleUsername = (value: string) => {
-    if (!validateUsername(value)) {
+    if (!validateUsername(value.trim())) {
       setUsernameValidate(
         "Username can only use letters,numbers, minimum length is 8 characters"
       );
     } else {
       setUsernameValidate("");
     }
-    setUsername(value);
+    setUsername(value.trim());
   };
 
   useEffect(() => {
