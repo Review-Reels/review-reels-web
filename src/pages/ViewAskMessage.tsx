@@ -122,11 +122,13 @@ function ViewAskMessage() {
         handlePrimaryAction={saveReviewResponse}
       >
         <div className="flex flex-col space-y-5">
-          <h2 className="text-xl font-semibold text-center">
-            Few things remember before you record the testimonials
-          </h2>
+          {isVideo && (
+            <h2 className="text-xl font-semibold text-center">
+              Few things remember before you record the testimonials
+            </h2>
+          )}
           <div className="bg-Peach_Cream-normal rounded p-2 ">
-            <ul className="list-disc">
+            <ul className="list-disc list-inside">
               <li>Try to to keep it on point.</li>
               {isVideo && (
                 <>

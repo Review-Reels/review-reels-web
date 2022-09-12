@@ -37,6 +37,7 @@ export default function GoogleButton({
     if (scriptLoaded) return undefined;
 
     const initializeGoogle = () => {
+      console.log(window.google, scriptLoaded, window?.google?.accounts.id);
       if (!window.google || scriptLoaded) return;
 
       setScriptLoaded(true);
@@ -46,6 +47,7 @@ export default function GoogleButton({
           handleGoogleSignIn(res);
         },
       });
+      window.google.accounts.id.prompt();
     };
 
     const script = document.createElement("script");
@@ -61,5 +63,5 @@ export default function GoogleButton({
     };
   }, [scriptLoaded, handleGoogleSignIn]);
 
-  return <div ref={divRef} />;
+  return <div ref={divRef} className={"g_id_signin"} />;
 }

@@ -26,6 +26,7 @@ import {
   Backspace,
   Copy,
   DownloadSimple,
+  CaretDown,
 } from "phosphor-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { debounce } from "ts-debounce";
@@ -279,12 +280,14 @@ function Inbox() {
               </div>
             </Tooltip>
             <button
-              className="bg-Athens_Gray  rounded-l-xl w-full border-[1px]	 text-Black2 py-2"
+              className="bg-Athens_Gray  rounded-l-xl w-full border-[1px]	 text-Black2 py-2 inline-flex items-center justify-center"
               onClick={() => setOpenAskMessageList(true)}
             >
               <span className="text-Black3">Select ask message: </span>
               {selectedAsKMessage?.name}
+              <CaretDown size={24} weight="fill" />
             </button>
+
             <Tooltip message="Clear ask message">
               <div
                 className="bg-Athens_Gray  rounded-r-xl  border-[1px]	 text-Black2 py-1 px-2 cursor-pointer"
