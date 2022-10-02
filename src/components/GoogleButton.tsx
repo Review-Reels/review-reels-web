@@ -15,17 +15,19 @@ export default function GoogleButton({
     }
 
     try {
-      window.google.accounts.id.initialize({
-        client_id: GoogleClientId,
-        callback: async (res: CredentialResponse) => {
-          handleGoogleSignIn(res);
-        },
-      });
-      window.google.accounts.id.renderButton(divRef.current, {
-        type: "standard",
-        theme: "outline",
-        size: "large",
-      });
+      if (GoogleClientId) {
+        window.google.accounts.id.initialize({
+          client_id: GoogleClientId,
+          callback: async (res: CredentialResponse) => {
+            handleGoogleSignIn(res);
+          },
+        });
+        window.google.accounts.id.renderButton(divRef.current, {
+          type: "standard",
+          theme: "outline",
+          size: "large",
+        });
+      }
     } catch (error) {
       console.log({ error });
     }
@@ -41,12 +43,14 @@ export default function GoogleButton({
       if (!window.google || scriptLoaded) return;
 
       setScriptLoaded(true);
-      window.google.accounts.id.initialize({
-        client_id: GoogleClientId,
-        callback: async (res: CredentialResponse) => {
-          handleGoogleSignIn(res);
-        },
-      });
+      if (GoogleClientId) {
+        window.google.accounts.id.initialize({
+          client_id: GoogleClientId,
+          callback: async (res: CredentialResponse) => {
+            handleGoogleSignIn(res);
+          },
+        });
+      }
       window.google.accounts.id.prompt();
     };
 

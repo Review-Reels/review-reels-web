@@ -23,6 +23,7 @@ jobs:
           REACT_APP_S3_URL: ${{ secrets.PROD_REACT_APP_S3_URL }}
           REACT_APP_WEB_APP_URL: ${{ secrets.PROD_REACT_APP_WEB_APP_URL }}
           REACT_APP_BACKEND_URL: ${{ secrets.PROD_REACT_APP_BACKEND_URL }}
+          REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.PROD_REACT_APP_GOOGLE_CLIENT_ID }}
         run: yarn install && yarn build
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./build/ s3://review.reviewreels.app --delete
