@@ -1,0 +1,27 @@
+name: s3-depl
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Build React App
+        env:
+          REACT_APP_SMART_LOOKS_KEY: ${{ secrets.REACT_APP_SMART_LOOKS_KEY }}
+          REACT_APP_S3_URL: ${{ secrets.REACT_APP_S3_URL }}
+          REACT_APP_WEB_APP_URL: ${{ secrets.REACT_APP_WEB_APP_URL }}
+          REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
+        run: yarn install && yarn build
+      - name: Deploy app build to S3 bucket
+        run: aws s3 sync ./build/ s3://review-reels-frontend-test --delete

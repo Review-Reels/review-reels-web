@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AllRoutes from "./Routes";
+
+import smartlookClient from "smartlook-client";
 
 function App() {
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production")
+      if (process.env.REACT_APP_SMART_LOOKS_KEY)
+        smartlookClient.init(process.env.REACT_APP_SMART_LOOKS_KEY);
+  });
   return (
-    <h1 className="text-3xl font-bold underline bg-slate-800">Hello world!</h1>
+    <div className="h-full">
+      <AllRoutes />
+    </div>
   );
 }
 
