@@ -118,7 +118,7 @@ function AskMessagesList({
                       {name.charAt(0)}
                     </div>
                   )}
-                  <div className="flex flex-col text-justify">
+                  <div className="flex flex-col text-justify max-w-[80%]">
                     <h3 className="text-lg font-medium">{name}</h3>
                     <p className="text-slate-600 text-justify break-word">
                       {askMessage}
