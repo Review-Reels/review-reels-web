@@ -41,7 +41,10 @@ function EmbedComponent({ reviewResponse }: PropType) {
             <p>{reviewResponse?.replyMessage}</p>
           </div>
         )}
-        <a href="https://www.reviewreels.app/?utm_source=poweredby&utm_medium=integration&utm_id=poweredby">
+        <a
+          href="https://www.reviewreels.app/?utm_source=poweredby&utm_medium=integration&utm_id=poweredby"
+          target="_parent"
+        >
           <div className="flex gap-4 text-Black2 m-4">
             powerd by <img src={logo} alt="review reels logo" />
           </div>
