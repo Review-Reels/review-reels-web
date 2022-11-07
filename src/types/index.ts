@@ -90,4 +90,5 @@ export type User = {
   emailVerified: boolean;
   Authorization?: string;
   picture?: string;
+  websiteUrl?: string;
 };

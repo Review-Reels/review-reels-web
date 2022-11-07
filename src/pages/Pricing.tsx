@@ -81,14 +81,14 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              {index !== 0 && (
+              {/* {index !== 0 && (
                 <a
                   className="gumroad-button"
                   href="https://adminreviewreels.gumroad.com/l/ldcxm?wanted=true"
                 >
                   Subscribe
                 </a>
-              )}
+              )} */}
             </div>
           ))}
         </div>
