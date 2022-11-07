@@ -22,6 +22,7 @@ function InitialDetails() {
     username: "",
     password: "",
     emailVerified: false,
+    websiteUrl: "",
   });
   const [showToast, setShowToast] = useState({
     show: false,
@@ -50,6 +51,13 @@ function InitialDetails() {
     setUser((prev) => ({
       ...prev,
       merchantName: value,
+    }));
+  };
+
+  const handleWebsiteUrl = (value: string) => {
+    setUser((prev) => ({
+      ...prev,
+      websiteUrl: value,
     }));
   };
 
@@ -105,6 +113,10 @@ function InitialDetails() {
         <div className="flex flex-col md:flex-row items-center gap-2">
           <label className="w-full font-medium">Merchant Name </label>
           <RRInput value={user?.merchantName} onChange={handleMerchantChange} />
+        </div>
+        <div className="flex flex-col md:flex-row items-center gap-2">
+          <label className="w-full font-medium">Website URL </label>
+          <RRInput value={user?.websiteUrl || ""} onChange={handleWebsiteUrl} />
         </div>
       </div>
       <Button className="bg-primaryRed" onClick={updateUserDetails}>
