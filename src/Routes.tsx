@@ -21,6 +21,7 @@ import InitialDetails from "./pages/InitialDetails";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgottenPassword from "./pages/ForgottenPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ReviewWall from "./pages/ReviewWall";
 
 function AllRoutes() {
   return (
@@ -45,6 +46,7 @@ function AllRoutes() {
               <Route path="/" element={<AskMessages />} />
               <Route path="askmessage" element={<AskMessages />} />
               <Route path="reviewlibrary" element={<ReviewLibrary />} />
+              <Route path="reviewlibrary/:libraryId" element={<ReviewWall />} />
               <Route path="inbox" element={<Inbox />} />
               <Route path="inbox/:requestId" element={<Inbox />} />
               <Route path="integrations" element={<Integrations />} />

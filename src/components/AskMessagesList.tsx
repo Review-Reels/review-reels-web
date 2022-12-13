@@ -106,7 +106,7 @@ function AskMessagesList({
                       <img
                         src={getUrl(imageUrl)}
                         alt={id}
-                        className="h-400 md:h-[121px] rounded-xl w-full"
+                        className="h-400 md:h-[121px] rounded-xl w-full object-cover"
                       />
                     </div>
                   ) : (
