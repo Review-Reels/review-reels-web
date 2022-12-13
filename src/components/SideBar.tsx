@@ -91,12 +91,9 @@ function SideBar({ hidden, setHidden }: Prop) {
             </li>
             <li>
               <NavLink
-                // to="/reviewlibrary"
-                to="/comingSoon"
+                to="/reviewlibrary"
                 className={({ isActive }) =>
-                  isActive
-                    ? activeClassName + " cursor-not-allowed"
-                    : normalClassName + " cursor-not-allowed"
+                  isActive ? activeClassName : normalClassName
                 }
               >
                 <CirclesFour size={32} className={iconClassName} />

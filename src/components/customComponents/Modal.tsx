@@ -11,6 +11,7 @@ interface Props {
   handlePrimaryAction?: (value: boolean) => void;
   handleSecondaryAction?: (value: boolean) => void;
   children?: ReactNode;
+  className?: string | " ";
 }
 function Modal({
   open,
@@ -22,17 +23,22 @@ function Modal({
   PrimaryButtonTitle,
   secondaryTitle,
   loading,
+  className,
 }: Props) {
   return (
     <>
       {open ? (
         <>
           <div className="modal fade fixed top-0 left-0  w-full h-full outline-none overflow-x-hidden overflow-y-auto z-50">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl ">
+            <div
+              className={`relative w-auto my-6 mx-auto max-w-3xl justify-center flex`}
+            >
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div
+                className={`border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none ${className}`}
+              >
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-slate-200">
+                <div className="flex items-center justify-between p-5 border-slate-200 gap-4">
                   <h3 className="text-xl font-regular text-color-Black2 w-full">
                     {title}
                   </h3>
