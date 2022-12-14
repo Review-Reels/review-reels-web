@@ -17,7 +17,9 @@ const HomePage = () => {
       <TopBar hidden={hidden} setHidden={setHidden} />
       <div className="flex">
         <SideBar hidden={hidden} setHidden={setHidden} />
-        <Outlet />
+        <div className="flex max-h-screen overflow-auto w-full">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

@@ -59,7 +59,7 @@ function SideBar({ hidden, setHidden }: Prop) {
   return (
     <aside aria-label="Sidebar">
       {!hidden && (
-        <div className="overflow-y-auto py-4 px-3 shadow-md h-screen">
+        <div className=" py-4 px-3 shadow-md min-h-screen">
           <ul className="space-y-2  my-10">
             <li>
               <NavLink

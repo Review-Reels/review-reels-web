@@ -88,7 +88,7 @@ function AskMessagesList({
           placeholder="Search.."
         />
       </div> */}
-      <div className="max-h-[45rem] overflow-y-auto md:h-auto">
+      <div className="max-h-screen md:h-auto">
         {askMessages.map((item, index) => {
           const { askMessage, createdAt, imageUrl, id, name } = item;
           return (

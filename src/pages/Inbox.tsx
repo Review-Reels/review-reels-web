@@ -183,7 +183,7 @@ function Inbox() {
         } = reviewResponse;
         return (
           <div
-            className="flex border-b-2 border-Black7 cursor-pointer"
+            className="flex border-b-2 border-Black7 cursor-pointer mb-10"
             key={id}
             onClick={() => handleOpen(reviewResponse)}
           >
@@ -260,143 +260,133 @@ function Inbox() {
     );
 
   return (
-    <Fragment>
-      <div className="w-full overflow-hidden mt-12">
-        <div className="w-full flex flex-col md:flex-row justify-center items-center md:mx-4 my-2 px-5">
-          <div className="w-full flex flex-row justify-center items-center">
-            <Tooltip message="Refresh">
-              <div className="p-2">
-                <ArrowsClockwise
-                  size={32}
-                  weight="bold"
-                  className="hover:animate-spin	cursor-pointer"
-                  onClick={() =>
-                    searchReviewResponse(
-                      search,
-                      selectedAsKMessage ? selectedAsKMessage.id : ""
-                    )
-                  }
-                />
-              </div>
-            </Tooltip>
-            <button
-              className="bg-Athens_Gray  rounded-l-xl w-full border-[1px]	 text-Black2 py-2 inline-flex items-center justify-center"
-              onClick={() => setOpenAskMessageList(true)}
-            >
-              <span className="text-Black3">Select ask message: </span>
-              {selectedAsKMessage?.name}
-              <CaretDown size={24} weight="fill" />
-            </button>
+    <div className="w-full overflow-x-hidden mt-12">
+      <div className="w-full flex flex-col md:flex-row justify-center items-center md:mx-4 my-2 px-5">
+        <div className="w-full flex flex-row justify-center items-center">
+          <Tooltip message="Refresh">
+            <div className="p-2">
+              <ArrowsClockwise
+                size={32}
+                weight="bold"
+                className="hover:animate-spin	cursor-pointer"
+                onClick={() =>
+                  searchReviewResponse(
+                    search,
+                    selectedAsKMessage ? selectedAsKMessage.id : ""
+                  )
+                }
+              />
+            </div>
+          </Tooltip>
+          <button
+            className="bg-Athens_Gray  rounded-l-xl w-full border-[1px]	 text-Black2 py-2 inline-flex items-center justify-center"
+            onClick={() => setOpenAskMessageList(true)}
+          >
+            <span className="text-Black3">Select ask message: </span>
+            {selectedAsKMessage?.name}
+            <CaretDown size={24} weight="fill" />
+          </button>
 
-            <Tooltip message="Clear ask message">
-              <div
-                className="bg-Athens_Gray  rounded-r-xl  border-[1px]	 text-Black2 py-1 px-2 cursor-pointer"
+          <Tooltip message="Clear ask message">
+            <div
+              className="bg-Athens_Gray  rounded-r-xl  border-[1px]	 text-Black2 py-1 px-2 cursor-pointer"
+              onClick={() => {
+                navigate(`/inbox`);
+                setSelectedAskMessage(null);
+              }}
+            >
+              <Backspace size={32} weight="fill" />
+            </div>
+          </Tooltip>
+        </div>
+        <div className="flex justify-center items-center bg-Athens_Gray rounded-xl px-4 w-full mx-2">
+          <input
+            autoFocus
+            type="text"
+            className="p-3  w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
+            placeholder="Search.."
+            value={search}
+            onChange={handleSearch}
+          ></input>
+          <MagnifyingGlass size={24} weight="bold" />
+        </div>
+      </div>
+      {loading ? (
+        <Loader />
+      ) : reviewResponses.length === 0 && (search || selectedAsKMessage) ? (
+        <div className="flex justify-center items-center flex-col gap-4 h-full">
+          <img src={EmptyReply} width={200} alt="empty ask message" />
+          <h1 className="text-2xl font-bold text-center text-Black2">
+            No Replies found
+          </h1>
+          <h2 className="text-xl font-medium text-center text-Black2">
+            Try changing the filters or search term
+          </h2>
+        </div>
+      ) : (
+        <div className="max-h-screen overflow-y-contain md:h-auto m-2 md:m-10 lg:m-10">
+          {listView}
+        </div>
+      )}
+
+      <Toast
+        showToast={showToast.show}
+        onClose={(value) => setShowToast((prev) => ({ ...prev, show: value }))}
+        toastMessage={showToast.message}
+        type={showToast.type}
+      />
+      <Modal open={open} handleClose={handleCloseEmbed}>
+        <div>
+          {reviewResponse && <EmbedComponent reviewResponse={reviewResponse} />}
+          <div>
+            <span className="text-Black2 font-semibold">
+              Embed the testimonial, copy and paste following code
+            </span>
+            <SyntaxHighlighter
+              language="javascript"
+              style={atomDark}
+              wrapLongLines
+              // className="select-all	"
+            >
+              {`<iframe src="${getWebUrl(
+                "embed/" + reviewResponse?.id
+              )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`}
+            </SyntaxHighlighter>
+            <div className="w-full flex justify-end">
+              <Button
+                className="bg-Anakiwa "
                 onClick={() => {
-                  navigate(`/inbox`);
-                  setSelectedAskMessage(null);
+                  navigator.clipboard.writeText(
+                    `<iframe src="${getWebUrl(
+                      "embed/" + reviewResponse?.id
+                    )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`
+                  );
+                  setCopied(true);
                 }}
               >
-                <Backspace size={32} weight="fill" />
-              </div>
-            </Tooltip>
-          </div>
-          <div className="flex justify-center items-center bg-Athens_Gray rounded-xl px-4 w-full mx-2">
-            <input
-              autoFocus
-              type="text"
-              className="p-3  w-full rounded-xl bg-Athens_Gray focus:text-gray-700  focus:border-blue-600 focus:outline-none"
-              placeholder="Search.."
-              value={search}
-              onChange={handleSearch}
-            ></input>
-            <MagnifyingGlass size={24} weight="bold" />
-          </div>
-        </div>
-        {loading ? (
-          <Loader />
-        ) : reviewResponses.length === 0 && (search || selectedAsKMessage) ? (
-          <div className="flex justify-center items-center flex-col gap-4 h-full">
-            <img src={EmptyReply} width={200} alt="empty ask message" />
-            <h1 className="text-2xl font-bold text-center text-Black2">
-              No Replies found
-            </h1>
-            <h2 className="text-xl font-medium text-center text-Black2">
-              Try changing the filters or search term
-            </h2>
-          </div>
-        ) : (
-          <div className="max-h-[35rem] md:max-h-[45rem] overflow-y-auto md:h-auto m-2 md:m-10 lg:m-10">
-            {listView}
-          </div>
-        )}
+                <Copy size={24} className="mr-2" />
+                {copied ? "Copied!" : "Copy Code"}
+              </Button>
 
-        <Toast
-          showToast={showToast.show}
-          onClose={(value) =>
-            setShowToast((prev) => ({ ...prev, show: value }))
-          }
-          toastMessage={showToast.message}
-          type={showToast.type}
-        />
-        <Modal open={open} handleClose={handleCloseEmbed}>
-          <div>
-            {reviewResponse && (
-              <EmbedComponent reviewResponse={reviewResponse} />
-            )}
-            <div>
-              <span className="text-Black2 font-semibold">
-                Embed the testimonial, copy and paste following code
-              </span>
-              <SyntaxHighlighter
-                language="javascript"
-                style={atomDark}
-                wrapLongLines
-                // className="select-all	"
-              >
-                {`<iframe src="${getWebUrl(
-                  "embed/" + reviewResponse?.id
-                )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`}
-              </SyntaxHighlighter>
-              <div className="w-full flex justify-end">
-                <Button
-                  className="bg-Anakiwa "
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `<iframe src="${getWebUrl(
-                        "embed/" + reviewResponse?.id
-                      )}" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>`
-                    );
-                    setCopied(true);
-                  }}
-                >
-                  <Copy size={24} className="mr-2" />
-                  {copied ? "Copied!" : "Copy Code"}
-                </Button>
-
-                {reviewResponse?.videoUrl && (
-                  <a href={getUrl(reviewResponse?.videoUrl)} download>
-                    <Button className="px-6 py-1 flex justify-center items-center text-white no-underline bg-Peach_Orange rounded-full first-letter:uppercase">
-                      <DownloadSimple
-                        size={24}
-                        weight="fill"
-                        className="mr-2"
-                      />
-                      Download
-                    </Button>
-                  </a>
-                )}
-              </div>
+              {reviewResponse?.videoUrl && (
+                <a href={getUrl(reviewResponse?.videoUrl)} download>
+                  <Button className="px-6 py-1 flex justify-center items-center text-white no-underline bg-Peach_Orange rounded-full first-letter:uppercase">
+                    <DownloadSimple size={24} weight="fill" className="mr-2" />
+                    Download
+                  </Button>
+                </a>
+              )}
             </div>
           </div>
-        </Modal>
-        <Modal open={openAskMessageList} handleClose={setOpenAskMessageList}>
-          <AskMessagesList
-            askMessages={askMessages}
-            handleClickItem={handleClickItem}
-          />
-        </Modal>
-      </div>
-    </Fragment>
+        </div>
+      </Modal>
+      <Modal open={openAskMessageList} handleClose={setOpenAskMessageList}>
+        <AskMessagesList
+          askMessages={askMessages}
+          handleClickItem={handleClickItem}
+        />
+      </Modal>
+    </div>
   );
 }
 
