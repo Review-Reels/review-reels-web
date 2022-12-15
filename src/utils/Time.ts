@@ -16,9 +16,9 @@ dayjs.updateLocale("en", {
     d: "1d",
     dd: "%dd",
     M: "%dmo",
-    MM: "%ddmo",
+    MM: "%dmo",
     y: "%dy",
-    yy: "%ddy",
+    yy: "%dy",
   },
 });
 

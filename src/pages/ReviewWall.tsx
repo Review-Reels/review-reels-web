@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Plus } from "phosphor-react";
+import { Link as LinkIcon, Plus } from "phosphor-react";
 import Button from "../components/customComponents/Button";
 import Modal from "../components/customComponents/Modal";
 import { ReviewResponse } from "../types";
 import { getReviewResponse } from "../apis/ReviewResponseApis";
 import EmbedComponent from "../components/EmbedComponent";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   editReviewLibrary,
   getOneReviewLibraryDataWithId,
@@ -25,7 +25,7 @@ const ReviewWall = () => {
     ReviewResponse[] | []
   >([]);
 
-  let { libraryId } = useParams();
+  let { libraryId, embed } = useParams();
 
   useEffect(() => {
     getReviewResponse("", "")
@@ -81,17 +81,23 @@ const ReviewWall = () => {
       );
     else setSelectedResponses([...selectedResponses, selection]);
   };
+  console.log(embed);
 
   return (
     <div className="flex w-full flex-col">
-      <div className="flex justify-end items-center flex-row h-16 mt-12 w-full">
-        <Button
-          className="bg-primaryRed px-2 py-1 m-2"
-          onClick={() => setReviewResponseModal(true)}
-        >
-          <Plus size={22} />
-        </Button>
-      </div>
+      {embed !== "embed" && (
+        <div className="flex justify-end items-center flex-row h-16 mt-12 w-full">
+          <Button
+            className="bg-primaryRed px-2 py-1 m-2"
+            onClick={() => setReviewResponseModal(true)}
+          >
+            <Plus size={22} />
+          </Button>
+          <Link to={`/library/embed/${libraryId}`}>
+            <LinkIcon size={32} weight="fill" />
+          </Link>
+        </div>
+      )}
       <div className="flex flex-wrap justify-center overscroll-contain max-h-[100rem]">
         {currentSelection.map((reviewResponse) => (
           <EmbedComponent reviewResponse={reviewResponse} />
@@ -108,8 +114,8 @@ const ReviewWall = () => {
         handlePrimaryAction={handleAddResponseToWall}
       >
         <div className="overscroll-contain max-h-96">
-          {reviewResponses.map((reviewResponse) => (
-            <div className="flex flex-row">
+          {reviewResponses.map((reviewResponse, index) => (
+            <div className="flex flex-row" key={index}>
               <input
                 className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                 type="checkbox"

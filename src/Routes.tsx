@@ -34,6 +34,7 @@ function AllRoutes() {
           <Route path="view/:requestId" element={<ViewAskMessage />} />
           <Route path="thankyou" element={<ThankYou />} />
           <Route path="embed/:responseId" element={<VideoEmbed />} />
+          <Route path="library/:embed/:libraryId" element={<ReviewWall />} />
           <Route path="verify/:email/:verifyHash" element={<VerifyEmail />} />
           <Route path="initialdetails" element={<InitialDetails />} />
           <Route path="forgot-password" element={<ForgottenPassword />} />

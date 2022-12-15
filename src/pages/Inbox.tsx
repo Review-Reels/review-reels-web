@@ -183,7 +183,7 @@ function Inbox() {
         } = reviewResponse;
         return (
           <div
-            className="flex border-b-2 border-Black7 cursor-pointer mb-10"
+            className="flex border-b-2 border-Black7 cursor-pointer"
             key={id}
             onClick={() => handleOpen(reviewResponse)}
           >
