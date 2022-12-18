@@ -10,6 +10,7 @@ import {
   editReviewLibrary,
   getOneReviewLibraryDataWithId,
 } from "../apis/ReviewLibraryApi";
+
 const ReviewWall = () => {
   const [reviewResponseModal, setReviewResponseModal] = useState(false);
 
@@ -47,7 +48,7 @@ const ReviewWall = () => {
   useEffect(() => {
     if (libraryId)
       getOneReviewLibraryDataWithId(libraryId).then((res) => {
-        const { reviewLibrary, reviewResponses } = res.data;
+        const { reviewResponses } = res.data;
         setCurrentSelection(reviewResponses);
         setSelectedResponses(reviewResponses);
       });
@@ -81,7 +82,6 @@ const ReviewWall = () => {
       );
     else setSelectedResponses([...selectedResponses, selection]);
   };
-  console.log(embed);
 
   return (
     <div className="flex w-full flex-col">
@@ -99,8 +99,8 @@ const ReviewWall = () => {
         </div>
       )}
       <div className="flex flex-wrap justify-center overscroll-contain max-h-[100rem]">
-        {currentSelection.map((reviewResponse) => (
-          <EmbedComponent reviewResponse={reviewResponse} />
+        {currentSelection.map((reviewResponse, index) => (
+          <EmbedComponent reviewResponse={reviewResponse} key={index} />
         ))}
       </div>
       <Modal

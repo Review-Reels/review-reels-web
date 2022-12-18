@@ -10,7 +10,7 @@ interface PropType {
 function EmbedComponent({ reviewResponse }: PropType) {
   return (
     <div className="flex flex-col items-center  justify-center">
-      <div className="flex flex-col gap-2 justify-center items-start border-2 p-3 m-2 rounded-lg">
+      <div className="flex flex-col gap-2 justify-center items-start border-2 p-3 m-2 rounded-lg w-96 ">
         <div className="flex gap-2 items-center">
           <div
             className={`flex rounded-full w-12 h-12 md:w-14 md:h-14 justify-center items-center bg-Peach_Orange`}
@@ -31,7 +31,7 @@ function EmbedComponent({ reviewResponse }: PropType) {
         {reviewResponse?.videoUrl ? (
           <div className="flex justify-center items-center cursor-pointer">
             <video
-              className=" rounded-xl shadow-lg md:max-w-[30rem]"
+              className="rounded-xl shadow-lg md:max-w-96"
               src={getUrl(reviewResponse?.videoUrl)}
               controls
             ></video>
@@ -41,14 +41,14 @@ function EmbedComponent({ reviewResponse }: PropType) {
             <p>{reviewResponse?.replyMessage}</p>
           </div>
         )}
-        <a
+        {/* <a
           href="https://www.reviewreels.app/?utm_source=poweredby&utm_medium=integration&utm_id=poweredby"
           target="_parent"
         >
           <div className="flex gap-4 text-Black2 m-4">
             powerd by <img src={logo} alt="review reels logo" />
           </div>
-        </a>
+        </a> */}
       </div>
     </div>
   );

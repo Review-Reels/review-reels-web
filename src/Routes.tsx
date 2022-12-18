@@ -22,6 +22,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ForgottenPassword from "./pages/ForgottenPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ReviewWall from "./pages/ReviewWall";
+import Drag from "./pages/Drag";
 
 function AllRoutes() {
   return (
