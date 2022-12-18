@@ -1,7 +1,7 @@
 import React from "react";
 import { ReviewResponse } from "../types";
 import { getUrl } from "../utils/S3Utils";
-import logo from "../images/LogoSmall.svg";
+// import logo from "../images/LogoSmall.svg";
 
 interface PropType {
   reviewResponse: ReviewResponse;
